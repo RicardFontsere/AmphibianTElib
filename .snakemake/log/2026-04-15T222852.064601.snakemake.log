@@ -1,0 +1,1207 @@
+host: login1.cerberus.os
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided remote nodes: 400
+Job stats:
+job                     count
+--------------------  -------
+all                         1
+rename_fasta_headers       62
+total                      63
+
+Select jobs to execute...
+Execute 62 jobs...
+
+[Wed Apr 15 22:28:52 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_leishanense/Leptobrachium_leishanense_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Leptobrachium_leishanense.log
+    jobid: 41
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_leishanense/Leptobrachium_leishanense_headers.fna
+    wildcards: species=Leptobrachium_leishanense
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_leishanense -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_leishanense/Leptobrachium_leishanense_headers.fna
+        echo "rename_fasta_headers completed for Leptobrachium_leishanense: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_leishanense/Leptobrachium_leishanense_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Leptobrachium_leishanense.log
+        
+Submitted job 41 with external jobid 'Submitted batch job 11871604'.
+
+[Wed Apr 15 22:28:52 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Epidalea_calamita/Epidalea_calamita_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Epidalea_calamita.log
+    jobid: 56
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Epidalea_calamita/Epidalea_calamita_headers.fna
+    wildcards: species=Epidalea_calamita
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Epidalea_calamita -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Epidalea_calamita/Epidalea_calamita_headers.fna
+        echo "rename_fasta_headers completed for Epidalea_calamita: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Epidalea_calamita/Epidalea_calamita_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Epidalea_calamita.log
+        
+Submitted job 56 with external jobid 'Submitted batch job 11871605'.
+
+[Wed Apr 15 22:28:52 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelophylax_nigromaculatus/Pelophylax_nigromaculatus_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pelophylax_nigromaculatus.log
+    jobid: 11
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelophylax_nigromaculatus/Pelophylax_nigromaculatus_headers.fna
+    wildcards: species=Pelophylax_nigromaculatus
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelophylax_nigromaculatus -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelophylax_nigromaculatus/Pelophylax_nigromaculatus_headers.fna
+        echo "rename_fasta_headers completed for Pelophylax_nigromaculatus: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelophylax_nigromaculatus/Pelophylax_nigromaculatus_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pelophylax_nigromaculatus.log
+        
+Submitted job 11 with external jobid 'Submitted batch job 11871606'.
+
+[Wed Apr 15 22:28:52 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_temporaria/Rana_temporaria_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Rana_temporaria.log
+    jobid: 26
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_temporaria/Rana_temporaria_headers.fna
+    wildcards: species=Rana_temporaria
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_temporaria -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_temporaria/Rana_temporaria_headers.fna
+        echo "rename_fasta_headers completed for Rana_temporaria: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_temporaria/Rana_temporaria_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Rana_temporaria.log
+        
+Submitted job 26 with external jobid 'Submitted batch job 11871607'.
+
+[Wed Apr 15 22:28:53 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_chensinensis/Rana_chensinensis_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Rana_chensinensis.log
+    jobid: 25
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_chensinensis/Rana_chensinensis_headers.fna
+    wildcards: species=Rana_chensinensis
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_chensinensis -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_chensinensis/Rana_chensinensis_headers.fna
+        echo "rename_fasta_headers completed for Rana_chensinensis: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_chensinensis/Rana_chensinensis_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Rana_chensinensis.log
+        
+Submitted job 25 with external jobid 'Submitted batch job 11871608'.
+
+[Wed Apr 15 22:28:53 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pyxicephalus_adspersus/Pyxicephalus_adspersus_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pyxicephalus_adspersus.log
+    jobid: 40
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pyxicephalus_adspersus/Pyxicephalus_adspersus_headers.fna
+    wildcards: species=Pyxicephalus_adspersus
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pyxicephalus_adspersus -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pyxicephalus_adspersus/Pyxicephalus_adspersus_headers.fna
+        echo "rename_fasta_headers completed for Pyxicephalus_adspersus: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pyxicephalus_adspersus/Pyxicephalus_adspersus_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pyxicephalus_adspersus.log
+        
+Submitted job 40 with external jobid 'Submitted batch job 11871609'.
+
+[Wed Apr 15 22:28:53 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_boringii/Leptobrachium_boringii_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Leptobrachium_boringii.log
+    jobid: 55
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_boringii/Leptobrachium_boringii_headers.fna
+    wildcards: species=Leptobrachium_boringii
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_boringii -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_boringii/Leptobrachium_boringii_headers.fna
+        echo "rename_fasta_headers completed for Leptobrachium_boringii: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_boringii/Leptobrachium_boringii_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Leptobrachium_boringii.log
+        
+Submitted job 55 with external jobid 'Submitted batch job 11871610'.
+
+[Wed Apr 15 22:28:53 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufo_bufo/Bufo_bufo_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Bufo_bufo.log
+    jobid: 10
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufo_bufo/Bufo_bufo_headers.fna
+    wildcards: species=Bufo_bufo
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufo_bufo -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufo_bufo/Bufo_bufo_headers.fna
+        echo "rename_fasta_headers completed for Bufo_bufo: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufo_bufo/Bufo_bufo_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Bufo_bufo.log
+        
+Submitted job 10 with external jobid 'Submitted batch job 11871611'.
+
+[Wed Apr 15 22:28:53 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufo_gargarizans/Bufo_gargarizans_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Bufo_gargarizans.log
+    jobid: 24
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufo_gargarizans/Bufo_gargarizans_headers.fna
+    wildcards: species=Bufo_gargarizans
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufo_gargarizans -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufo_gargarizans/Bufo_gargarizans_headers.fna
+        echo "rename_fasta_headers completed for Bufo_gargarizans: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufo_gargarizans/Bufo_gargarizans_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Bufo_gargarizans.log
+        
+Submitted job 24 with external jobid 'Submitted batch job 11871612'.
+
+[Wed Apr 15 22:28:53 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lissotriton_helveticus/Lissotriton_helveticus_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Lissotriton_helveticus.log
+    jobid: 39
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lissotriton_helveticus/Lissotriton_helveticus_headers.fna
+    wildcards: species=Lissotriton_helveticus
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lissotriton_helveticus -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lissotriton_helveticus/Lissotriton_helveticus_headers.fna
+        echo "rename_fasta_headers completed for Lissotriton_helveticus: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lissotriton_helveticus/Lissotriton_helveticus_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Lissotriton_helveticus.log
+        
+Submitted job 39 with external jobid 'Submitted batch job 11871613'.
+
+[Wed Apr 15 22:28:53 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Anomaloglossus_baeobatrachus/Anomaloglossus_baeobatrachus_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Anomaloglossus_baeobatrachus.log
+    jobid: 54
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Anomaloglossus_baeobatrachus/Anomaloglossus_baeobatrachus_headers.fna
+    wildcards: species=Anomaloglossus_baeobatrachus
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Anomaloglossus_baeobatrachus -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Anomaloglossus_baeobatrachus/Anomaloglossus_baeobatrachus_headers.fna
+        echo "rename_fasta_headers completed for Anomaloglossus_baeobatrachus: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Anomaloglossus_baeobatrachus/Anomaloglossus_baeobatrachus_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Anomaloglossus_baeobatrachus.log
+        
+Submitted job 54 with external jobid 'Submitted batch job 11871614'.
+
+[Wed Apr 15 22:28:53 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_tropicalis/Xenopus_tropicalis_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Xenopus_tropicalis.log
+    jobid: 9
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_tropicalis/Xenopus_tropicalis_headers.fna
+    wildcards: species=Xenopus_tropicalis
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_tropicalis -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_tropicalis/Xenopus_tropicalis_headers.fna
+        echo "rename_fasta_headers completed for Xenopus_tropicalis: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_tropicalis/Xenopus_tropicalis_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Xenopus_tropicalis.log
+        
+Submitted job 9 with external jobid 'Submitted batch job 11871615'.
+
+[Wed Apr 15 22:28:53 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Triturus_cristatus/Triturus_cristatus_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Triturus_cristatus.log
+    jobid: 8
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Triturus_cristatus/Triturus_cristatus_headers.fna
+    wildcards: species=Triturus_cristatus
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Triturus_cristatus -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Triturus_cristatus/Triturus_cristatus_headers.fna
+        echo "rename_fasta_headers completed for Triturus_cristatus: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Triturus_cristatus/Triturus_cristatus_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Triturus_cristatus.log
+        
+Submitted job 8 with external jobid 'Submitted batch job 11871616'.
+
+[Wed Apr 15 22:28:54 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_petersii/Xenopus_petersii_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Xenopus_petersii.log
+    jobid: 23
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_petersii/Xenopus_petersii_headers.fna
+    wildcards: species=Xenopus_petersii
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_petersii -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_petersii/Xenopus_petersii_headers.fna
+        echo "rename_fasta_headers completed for Xenopus_petersii: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_petersii/Xenopus_petersii_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Xenopus_petersii.log
+        
+Submitted job 23 with external jobid 'Submitted batch job 11871617'.
+
+[Wed Apr 15 22:28:54 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Microcaecilia_unicolor/Microcaecilia_unicolor_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Microcaecilia_unicolor.log
+    jobid: 38
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Microcaecilia_unicolor/Microcaecilia_unicolor_headers.fna
+    wildcards: species=Microcaecilia_unicolor
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Microcaecilia_unicolor -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Microcaecilia_unicolor/Microcaecilia_unicolor_headers.fna
+        echo "rename_fasta_headers completed for Microcaecilia_unicolor: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Microcaecilia_unicolor/Microcaecilia_unicolor_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Microcaecilia_unicolor.log
+        
+Submitted job 38 with external jobid 'Submitted batch job 11871618'.
+
+[Wed Apr 15 22:28:54 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelodytes_ibericus/Pelodytes_ibericus_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pelodytes_ibericus.log
+    jobid: 53
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelodytes_ibericus/Pelodytes_ibericus_headers.fna
+    wildcards: species=Pelodytes_ibericus
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelodytes_ibericus -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelodytes_ibericus/Pelodytes_ibericus_headers.fna
+        echo "rename_fasta_headers completed for Pelodytes_ibericus: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelodytes_ibericus/Pelodytes_ibericus_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pelodytes_ibericus.log
+        
+Submitted job 53 with external jobid 'Submitted batch job 11871619'.
+
+[Wed Apr 15 22:28:54 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_kukunoris/Rana_kukunoris_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Rana_kukunoris.log
+    jobid: 7
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_kukunoris/Rana_kukunoris_headers.fna
+    wildcards: species=Rana_kukunoris
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_kukunoris -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_kukunoris/Rana_kukunoris_headers.fna
+        echo "rename_fasta_headers completed for Rana_kukunoris: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_kukunoris/Rana_kukunoris_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Rana_kukunoris.log
+        
+Submitted job 7 with external jobid 'Submitted batch job 11871620'.
+
+[Wed Apr 15 22:28:54 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ptychadena_robeensis/Ptychadena_robeensis_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Ptychadena_robeensis.log
+    jobid: 22
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ptychadena_robeensis/Ptychadena_robeensis_headers.fna
+    wildcards: species=Ptychadena_robeensis
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ptychadena_robeensis -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ptychadena_robeensis/Ptychadena_robeensis_headers.fna
+        echo "rename_fasta_headers completed for Ptychadena_robeensis: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ptychadena_robeensis/Ptychadena_robeensis_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Ptychadena_robeensis.log
+        
+Submitted job 22 with external jobid 'Submitted batch job 11871621'.
+
+[Wed Apr 15 22:28:54 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ranitomeya_imitator/Ranitomeya_imitator_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Ranitomeya_imitator.log
+    jobid: 37
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ranitomeya_imitator/Ranitomeya_imitator_headers.fna
+    wildcards: species=Ranitomeya_imitator
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ranitomeya_imitator -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ranitomeya_imitator/Ranitomeya_imitator_headers.fna
+        echo "rename_fasta_headers completed for Ranitomeya_imitator: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ranitomeya_imitator/Ranitomeya_imitator_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Ranitomeya_imitator.log
+        
+Submitted job 37 with external jobid 'Submitted batch job 11871622'.
+
+[Wed Apr 15 22:28:54 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Dendropsophus_ebraccatus/Dendropsophus_ebraccatus_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Dendropsophus_ebraccatus.log
+    jobid: 52
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Dendropsophus_ebraccatus/Dendropsophus_ebraccatus_headers.fna
+    wildcards: species=Dendropsophus_ebraccatus
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Dendropsophus_ebraccatus -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Dendropsophus_ebraccatus/Dendropsophus_ebraccatus_headers.fna
+        echo "rename_fasta_headers completed for Dendropsophus_ebraccatus: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Dendropsophus_ebraccatus/Dendropsophus_ebraccatus_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Dendropsophus_ebraccatus.log
+        
+Submitted job 52 with external jobid 'Submitted batch job 11871623'.
+
+[Wed Apr 15 22:28:54 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ascaphus_truei/Ascaphus_truei_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Ascaphus_truei.log
+    jobid: 51
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ascaphus_truei/Ascaphus_truei_headers.fna
+    wildcards: species=Ascaphus_truei
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ascaphus_truei -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ascaphus_truei/Ascaphus_truei_headers.fna
+        echo "rename_fasta_headers completed for Ascaphus_truei: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ascaphus_truei/Ascaphus_truei_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Ascaphus_truei.log
+        
+Submitted job 51 with external jobid 'Submitted batch job 11871624'.
+
+[Wed Apr 15 22:28:54 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinatrema_bivittatum/Rhinatrema_bivittatum_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Rhinatrema_bivittatum.log
+    jobid: 6
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinatrema_bivittatum/Rhinatrema_bivittatum_headers.fna
+    wildcards: species=Rhinatrema_bivittatum
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinatrema_bivittatum -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinatrema_bivittatum/Rhinatrema_bivittatum_headers.fna
+        echo "rename_fasta_headers completed for Rhinatrema_bivittatum: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinatrema_bivittatum/Rhinatrema_bivittatum_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Rhinatrema_bivittatum.log
+        
+Submitted job 6 with external jobid 'Submitted batch job 11871625'.
+
+[Wed Apr 15 22:28:54 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptodactylus_fuscus/Leptodactylus_fuscus_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Leptodactylus_fuscus.log
+    jobid: 21
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptodactylus_fuscus/Leptodactylus_fuscus_headers.fna
+    wildcards: species=Leptodactylus_fuscus
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptodactylus_fuscus -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptodactylus_fuscus/Leptodactylus_fuscus_headers.fna
+        echo "rename_fasta_headers completed for Leptodactylus_fuscus: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptodactylus_fuscus/Leptodactylus_fuscus_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Leptodactylus_fuscus.log
+        
+Submitted job 21 with external jobid 'Submitted batch job 11871626'.
+
+[Wed Apr 15 22:28:54 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Fejervarya_limnocharis/Fejervarya_limnocharis_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Fejervarya_limnocharis.log
+    jobid: 36
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Fejervarya_limnocharis/Fejervarya_limnocharis_headers.fna
+    wildcards: species=Fejervarya_limnocharis
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Fejervarya_limnocharis -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Fejervarya_limnocharis/Fejervarya_limnocharis_headers.fna
+        echo "rename_fasta_headers completed for Fejervarya_limnocharis: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Fejervarya_limnocharis/Fejervarya_limnocharis_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Fejervarya_limnocharis.log
+        
+Submitted job 36 with external jobid 'Submitted batch job 11871627'.
+
+[Wed Apr 15 22:28:55 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lithobates_pipiens/Lithobates_pipiens_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Lithobates_pipiens.log
+    jobid: 50
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lithobates_pipiens/Lithobates_pipiens_headers.fna
+    wildcards: species=Lithobates_pipiens
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lithobates_pipiens -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lithobates_pipiens/Lithobates_pipiens_headers.fna
+        echo "rename_fasta_headers completed for Lithobates_pipiens: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lithobates_pipiens/Lithobates_pipiens_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Lithobates_pipiens.log
+        
+Submitted job 50 with external jobid 'Submitted batch job 11871628'.
+
+[Wed Apr 15 22:28:55 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bombina_bombina/Bombina_bombina_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Bombina_bombina.log
+    jobid: 5
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bombina_bombina/Bombina_bombina_headers.fna
+    wildcards: species=Bombina_bombina
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bombina_bombina -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bombina_bombina/Bombina_bombina_headers.fna
+        echo "rename_fasta_headers completed for Bombina_bombina: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bombina_bombina/Bombina_bombina_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Bombina_bombina.log
+        
+Submitted job 5 with external jobid 'Submitted batch job 11871629'.
+
+[Wed Apr 15 22:28:55 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Spea_bombifrons/Spea_bombifrons_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Spea_bombifrons.log
+    jobid: 20
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Spea_bombifrons/Spea_bombifrons_headers.fna
+    wildcards: species=Spea_bombifrons
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Spea_bombifrons -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Spea_bombifrons/Spea_bombifrons_headers.fna
+        echo "rename_fasta_headers completed for Spea_bombifrons: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Spea_bombifrons/Spea_bombifrons_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Spea_bombifrons.log
+        
+Submitted job 20 with external jobid 'Submitted batch job 11871630'.
+
+[Wed Apr 15 22:28:55 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pleurodeles_waltl/Pleurodeles_waltl_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pleurodeles_waltl.log
+    jobid: 35
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pleurodeles_waltl/Pleurodeles_waltl_headers.fna
+    wildcards: species=Pleurodeles_waltl
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pleurodeles_waltl -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pleurodeles_waltl/Pleurodeles_waltl_headers.fna
+        echo "rename_fasta_headers completed for Pleurodeles_waltl: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pleurodeles_waltl/Pleurodeles_waltl_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pleurodeles_waltl.log
+        
+Submitted job 35 with external jobid 'Submitted batch job 11871631'.
+
+[Wed Apr 15 22:28:55 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Desmognathus_fuscus/Desmognathus_fuscus_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Desmognathus_fuscus.log
+    jobid: 34
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Desmognathus_fuscus/Desmognathus_fuscus_headers.fna
+    wildcards: species=Desmognathus_fuscus
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Desmognathus_fuscus -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Desmognathus_fuscus/Desmognathus_fuscus_headers.fna
+        echo "rename_fasta_headers completed for Desmognathus_fuscus: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Desmognathus_fuscus/Desmognathus_fuscus_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Desmognathus_fuscus.log
+        
+Submitted job 34 with external jobid 'Submitted batch job 11871632'.
+
+[Wed Apr 15 22:28:55 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lissotriton_vulgaris/Lissotriton_vulgaris_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Lissotriton_vulgaris.log
+    jobid: 49
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lissotriton_vulgaris/Lissotriton_vulgaris_headers.fna
+    wildcards: species=Lissotriton_vulgaris
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lissotriton_vulgaris -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lissotriton_vulgaris/Lissotriton_vulgaris_headers.fna
+        echo "rename_fasta_headers completed for Lissotriton_vulgaris: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lissotriton_vulgaris/Lissotriton_vulgaris_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Lissotriton_vulgaris.log
+        
+Submitted job 49 with external jobid 'Submitted batch job 11871633'.
+
+[Wed Apr 15 22:28:55 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelophylax_lessonae/Pelophylax_lessonae_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pelophylax_lessonae.log
+    jobid: 4
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelophylax_lessonae/Pelophylax_lessonae_headers.fna
+    wildcards: species=Pelophylax_lessonae
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelophylax_lessonae -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelophylax_lessonae/Pelophylax_lessonae_headers.fna
+        echo "rename_fasta_headers completed for Pelophylax_lessonae: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelophylax_lessonae/Pelophylax_lessonae_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pelophylax_lessonae.log
+        
+Submitted job 4 with external jobid 'Submitted batch job 11871634'.
+
+[Wed Apr 15 22:28:55 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pseudacris_triseriata/Pseudacris_triseriata_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pseudacris_triseriata.log
+    jobid: 19
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pseudacris_triseriata/Pseudacris_triseriata_headers.fna
+    wildcards: species=Pseudacris_triseriata
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pseudacris_triseriata -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pseudacris_triseriata/Pseudacris_triseriata_headers.fna
+        echo "rename_fasta_headers completed for Pseudacris_triseriata: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pseudacris_triseriata/Pseudacris_triseriata_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pseudacris_triseriata.log
+        
+Submitted job 19 with external jobid 'Submitted batch job 11871635'.
+
+[Wed Apr 15 22:28:55 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ranitomeya_variabilis/Ranitomeya_variabilis_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Ranitomeya_variabilis.log
+    jobid: 33
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ranitomeya_variabilis/Ranitomeya_variabilis_headers.fna
+    wildcards: species=Ranitomeya_variabilis
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ranitomeya_variabilis -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ranitomeya_variabilis/Ranitomeya_variabilis_headers.fna
+        echo "rename_fasta_headers completed for Ranitomeya_variabilis: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ranitomeya_variabilis/Ranitomeya_variabilis_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Ranitomeya_variabilis.log
+        
+Submitted job 33 with external jobid 'Submitted batch job 11871636'.
+
+[Wed Apr 15 22:28:55 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinoderma_darwinii/Rhinoderma_darwinii_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Rhinoderma_darwinii.log
+    jobid: 48
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinoderma_darwinii/Rhinoderma_darwinii_headers.fna
+    wildcards: species=Rhinoderma_darwinii
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinoderma_darwinii -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinoderma_darwinii/Rhinoderma_darwinii_headers.fna
+        echo "rename_fasta_headers completed for Rhinoderma_darwinii: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinoderma_darwinii/Rhinoderma_darwinii_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Rhinoderma_darwinii.log
+        
+Submitted job 48 with external jobid 'Submitted batch job 11871637'.
+
+[Wed Apr 15 22:28:55 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Eleutherodactylus_marnockii/Eleutherodactylus_marnockii_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Eleutherodactylus_marnockii.log
+    jobid: 3
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Eleutherodactylus_marnockii/Eleutherodactylus_marnockii_headers.fna
+    wildcards: species=Eleutherodactylus_marnockii
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Eleutherodactylus_marnockii -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Eleutherodactylus_marnockii/Eleutherodactylus_marnockii_headers.fna
+        echo "rename_fasta_headers completed for Eleutherodactylus_marnockii: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Eleutherodactylus_marnockii/Eleutherodactylus_marnockii_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Eleutherodactylus_marnockii.log
+        
+Submitted job 3 with external jobid 'Submitted batch job 11871638'.
+
+[Wed Apr 15 22:28:55 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_muscosa/Rana_muscosa_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Rana_muscosa.log
+    jobid: 18
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_muscosa/Rana_muscosa_headers.fna
+    wildcards: species=Rana_muscosa
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_muscosa -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_muscosa/Rana_muscosa_headers.fna
+        echo "rename_fasta_headers completed for Rana_muscosa: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_muscosa/Rana_muscosa_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Rana_muscosa.log
+        
+Submitted job 18 with external jobid 'Submitted batch job 11871639'.
+
+[Wed Apr 15 22:28:56 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Scaphiopus_couchii/Scaphiopus_couchii_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Scaphiopus_couchii.log
+    jobid: 17
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Scaphiopus_couchii/Scaphiopus_couchii_headers.fna
+    wildcards: species=Scaphiopus_couchii
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Scaphiopus_couchii -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Scaphiopus_couchii/Scaphiopus_couchii_headers.fna
+        echo "rename_fasta_headers completed for Scaphiopus_couchii: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Scaphiopus_couchii/Scaphiopus_couchii_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Scaphiopus_couchii.log
+        
+Submitted job 17 with external jobid 'Submitted batch job 11871640'.
+
+[Wed Apr 15 22:28:56 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinophrynus_dorsalis/Rhinophrynus_dorsalis_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Rhinophrynus_dorsalis.log
+    jobid: 32
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinophrynus_dorsalis/Rhinophrynus_dorsalis_headers.fna
+    wildcards: species=Rhinophrynus_dorsalis
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinophrynus_dorsalis -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinophrynus_dorsalis/Rhinophrynus_dorsalis_headers.fna
+        echo "rename_fasta_headers completed for Rhinophrynus_dorsalis: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinophrynus_dorsalis/Rhinophrynus_dorsalis_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Rhinophrynus_dorsalis.log
+        
+Submitted job 32 with external jobid 'Submitted batch job 11871641'.
+
+[Wed Apr 15 22:28:56 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufotes_viridis/Bufotes_viridis_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Bufotes_viridis.log
+    jobid: 47
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufotes_viridis/Bufotes_viridis_headers.fna
+    wildcards: species=Bufotes_viridis
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufotes_viridis -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufotes_viridis/Bufotes_viridis_headers.fna
+        echo "rename_fasta_headers completed for Bufotes_viridis: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufotes_viridis/Bufotes_viridis_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Bufotes_viridis.log
+        
+Submitted job 47 with external jobid 'Submitted batch job 11871642'.
+
+[Wed Apr 15 22:28:56 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Mixophyes_fleayi/Mixophyes_fleayi_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Mixophyes_fleayi.log
+    jobid: 2
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Mixophyes_fleayi/Mixophyes_fleayi_headers.fna
+    wildcards: species=Mixophyes_fleayi
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Mixophyes_fleayi -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Mixophyes_fleayi/Mixophyes_fleayi_headers.fna
+        echo "rename_fasta_headers completed for Mixophyes_fleayi: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Mixophyes_fleayi/Mixophyes_fleayi_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Mixophyes_fleayi.log
+        
+Submitted job 2 with external jobid 'Submitted batch job 11871643'.
+
+[Wed Apr 15 22:28:56 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Gastrophryne_carolinensis/Gastrophryne_carolinensis_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Gastrophryne_carolinensis.log
+    jobid: 62
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Gastrophryne_carolinensis/Gastrophryne_carolinensis_headers.fna
+    wildcards: species=Gastrophryne_carolinensis
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Gastrophryne_carolinensis -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Gastrophryne_carolinensis/Gastrophryne_carolinensis_headers.fna
+        echo "rename_fasta_headers completed for Gastrophryne_carolinensis: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Gastrophryne_carolinensis/Gastrophryne_carolinensis_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Gastrophryne_carolinensis.log
+        
+Submitted job 62 with external jobid 'Submitted batch job 11871644'.
+
+[Wed Apr 15 22:28:56 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_borealis/Xenopus_borealis_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Xenopus_borealis.log
+    jobid: 16
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_borealis/Xenopus_borealis_headers.fna
+    wildcards: species=Xenopus_borealis
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_borealis -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_borealis/Xenopus_borealis_headers.fna
+        echo "rename_fasta_headers completed for Xenopus_borealis: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_borealis/Xenopus_borealis_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Xenopus_borealis.log
+        
+Submitted job 16 with external jobid 'Submitted batch job 11871645'.
+
+[Wed Apr 15 22:28:56 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_ailaonicum/Leptobrachium_ailaonicum_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Leptobrachium_ailaonicum.log
+    jobid: 31
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_ailaonicum/Leptobrachium_ailaonicum_headers.fna
+    wildcards: species=Leptobrachium_ailaonicum
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_ailaonicum -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_ailaonicum/Leptobrachium_ailaonicum_headers.fna
+        echo "rename_fasta_headers completed for Leptobrachium_ailaonicum: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_ailaonicum/Leptobrachium_ailaonicum_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Leptobrachium_ailaonicum.log
+        
+Submitted job 31 with external jobid 'Submitted batch job 11871646'.
+
+[Wed Apr 15 22:28:56 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Aquarana_catesbeiana/Aquarana_catesbeiana_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Aquarana_catesbeiana.log
+    jobid: 46
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Aquarana_catesbeiana/Aquarana_catesbeiana_headers.fna
+    wildcards: species=Aquarana_catesbeiana
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Aquarana_catesbeiana -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Aquarana_catesbeiana/Aquarana_catesbeiana_headers.fna
+        echo "rename_fasta_headers completed for Aquarana_catesbeiana: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Aquarana_catesbeiana/Aquarana_catesbeiana_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Aquarana_catesbeiana.log
+        
+Submitted job 46 with external jobid 'Submitted batch job 11871647'.
+
+[Wed Apr 15 22:28:56 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_laevis/Xenopus_laevis_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Xenopus_laevis.log
+    jobid: 61
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_laevis/Xenopus_laevis_headers.fna
+    wildcards: species=Xenopus_laevis
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_laevis -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_laevis/Xenopus_laevis_headers.fna
+        echo "rename_fasta_headers completed for Xenopus_laevis: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_laevis/Xenopus_laevis_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Xenopus_laevis.log
+        
+Submitted job 61 with external jobid 'Submitted batch job 11871648'.
+
+[Wed Apr 15 22:28:56 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Engystomops_pustulosus/Engystomops_pustulosus_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Engystomops_pustulosus.log
+    jobid: 60
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Engystomops_pustulosus/Engystomops_pustulosus_headers.fna
+    wildcards: species=Engystomops_pustulosus
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Engystomops_pustulosus -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Engystomops_pustulosus/Engystomops_pustulosus_headers.fna
+        echo "rename_fasta_headers completed for Engystomops_pustulosus: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Engystomops_pustulosus/Engystomops_pustulosus_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Engystomops_pustulosus.log
+        
+Submitted job 60 with external jobid 'Submitted batch job 11871649'.
+
+[Wed Apr 15 22:28:56 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ambystoma_mexicanum/Ambystoma_mexicanum_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Ambystoma_mexicanum.log
+    jobid: 15
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ambystoma_mexicanum/Ambystoma_mexicanum_headers.fna
+    wildcards: species=Ambystoma_mexicanum
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ambystoma_mexicanum -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ambystoma_mexicanum/Ambystoma_mexicanum_headers.fna
+        echo "rename_fasta_headers completed for Ambystoma_mexicanum: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ambystoma_mexicanum/Ambystoma_mexicanum_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Ambystoma_mexicanum.log
+        
+Submitted job 15 with external jobid 'Submitted batch job 11871650'.
+
+[Wed Apr 15 22:28:56 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hyla_sarda/Hyla_sarda_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Hyla_sarda.log
+    jobid: 30
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hyla_sarda/Hyla_sarda_headers.fna
+    wildcards: species=Hyla_sarda
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hyla_sarda -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hyla_sarda/Hyla_sarda_headers.fna
+        echo "rename_fasta_headers completed for Hyla_sarda: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hyla_sarda/Hyla_sarda_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Hyla_sarda.log
+        
+Submitted job 30 with external jobid 'Submitted batch job 11871651'.
+
+[Wed Apr 15 22:28:57 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Discoglossus_pictus/Discoglossus_pictus_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Discoglossus_pictus.log
+    jobid: 45
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Discoglossus_pictus/Discoglossus_pictus_headers.fna
+    wildcards: species=Discoglossus_pictus
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Discoglossus_pictus -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Discoglossus_pictus/Discoglossus_pictus_headers.fna
+        echo "rename_fasta_headers completed for Discoglossus_pictus: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Discoglossus_pictus/Discoglossus_pictus_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Discoglossus_pictus.log
+        
+Submitted job 45 with external jobid 'Submitted batch job 11871652'.
+
+[Wed Apr 15 22:28:57 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pseudophryne_corroboree/Pseudophryne_corroboree_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pseudophryne_corroboree.log
+    jobid: 59
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pseudophryne_corroboree/Pseudophryne_corroboree_headers.fna
+    wildcards: species=Pseudophryne_corroboree
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pseudophryne_corroboree -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pseudophryne_corroboree/Pseudophryne_corroboree_headers.fna
+        echo "rename_fasta_headers completed for Pseudophryne_corroboree: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pseudophryne_corroboree/Pseudophryne_corroboree_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pseudophryne_corroboree.log
+        
+Submitted job 59 with external jobid 'Submitted batch job 11871653'.
+
+[Wed Apr 15 22:28:57 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hyperolius_riggenbachi/Hyperolius_riggenbachi_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Hyperolius_riggenbachi.log
+    jobid: 14
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hyperolius_riggenbachi/Hyperolius_riggenbachi_headers.fna
+    wildcards: species=Hyperolius_riggenbachi
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hyperolius_riggenbachi -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hyperolius_riggenbachi/Hyperolius_riggenbachi_headers.fna
+        echo "rename_fasta_headers completed for Hyperolius_riggenbachi: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hyperolius_riggenbachi/Hyperolius_riggenbachi_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Hyperolius_riggenbachi.log
+        
+Submitted job 14 with external jobid 'Submitted batch job 11871654'.
+
+[Wed Apr 15 22:28:57 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Geotrypetes_seraphini/Geotrypetes_seraphini_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Geotrypetes_seraphini.log
+    jobid: 29
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Geotrypetes_seraphini/Geotrypetes_seraphini_headers.fna
+    wildcards: species=Geotrypetes_seraphini
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Geotrypetes_seraphini -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Geotrypetes_seraphini/Geotrypetes_seraphini_headers.fna
+        echo "rename_fasta_headers completed for Geotrypetes_seraphini: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Geotrypetes_seraphini/Geotrypetes_seraphini_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Geotrypetes_seraphini.log
+        
+Submitted job 29 with external jobid 'Submitted batch job 11871655'.
+
+[Wed Apr 15 22:28:57 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Spea_multiplicata/Spea_multiplicata_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Spea_multiplicata.log
+    jobid: 1
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Spea_multiplicata/Spea_multiplicata_headers.fna
+    wildcards: species=Spea_multiplicata
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Spea_multiplicata -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Spea_multiplicata/Spea_multiplicata_headers.fna
+        echo "rename_fasta_headers completed for Spea_multiplicata: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Spea_multiplicata/Spea_multiplicata_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Spea_multiplicata.log
+        
+Submitted job 1 with external jobid 'Submitted batch job 11871656'.
+
+[Wed Apr 15 22:28:57 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bombina_variegata/Bombina_variegata_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Bombina_variegata.log
+    jobid: 44
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bombina_variegata/Bombina_variegata_headers.fna
+    wildcards: species=Bombina_variegata
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bombina_variegata -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bombina_variegata/Bombina_variegata_headers.fna
+        echo "rename_fasta_headers completed for Bombina_variegata: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bombina_variegata/Bombina_variegata_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Bombina_variegata.log
+        
+Submitted job 44 with external jobid 'Submitted batch job 11871657'.
+
+[Wed Apr 15 22:28:57 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelobates_cultripes/Pelobates_cultripes_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pelobates_cultripes.log
+    jobid: 43
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelobates_cultripes/Pelobates_cultripes_headers.fna
+    wildcards: species=Pelobates_cultripes
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelobates_cultripes -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelobates_cultripes/Pelobates_cultripes_headers.fna
+        echo "rename_fasta_headers completed for Pelobates_cultripes: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelobates_cultripes/Pelobates_cultripes_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pelobates_cultripes.log
+        
+Submitted job 43 with external jobid 'Submitted batch job 11871658'.
+
+[Wed Apr 15 22:28:57 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Mantella_aurantiaca/Mantella_aurantiaca_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Mantella_aurantiaca.log
+    jobid: 58
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Mantella_aurantiaca/Mantella_aurantiaca_headers.fna
+    wildcards: species=Mantella_aurantiaca
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Mantella_aurantiaca -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Mantella_aurantiaca/Mantella_aurantiaca_headers.fna
+        echo "rename_fasta_headers completed for Mantella_aurantiaca: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Mantella_aurantiaca/Mantella_aurantiaca_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Mantella_aurantiaca.log
+        
+Submitted job 58 with external jobid 'Submitted batch job 11871659'.
+
+[Wed Apr 15 22:28:57 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Eleutherodactylus_coqui/Eleutherodactylus_coqui_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Eleutherodactylus_coqui.log
+    jobid: 13
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Eleutherodactylus_coqui/Eleutherodactylus_coqui_headers.fna
+    wildcards: species=Eleutherodactylus_coqui
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Eleutherodactylus_coqui -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Eleutherodactylus_coqui/Eleutherodactylus_coqui_headers.fna
+        echo "rename_fasta_headers completed for Eleutherodactylus_coqui: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Eleutherodactylus_coqui/Eleutherodactylus_coqui_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Eleutherodactylus_coqui.log
+        
+Submitted job 13 with external jobid 'Submitted batch job 11871660'.
+
+[Wed Apr 15 22:28:57 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hymenochirus_boettgeri/Hymenochirus_boettgeri_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Hymenochirus_boettgeri.log
+    jobid: 28
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hymenochirus_boettgeri/Hymenochirus_boettgeri_headers.fna
+    wildcards: species=Hymenochirus_boettgeri
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hymenochirus_boettgeri -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hymenochirus_boettgeri/Hymenochirus_boettgeri_headers.fna
+        echo "rename_fasta_headers completed for Hymenochirus_boettgeri: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hymenochirus_boettgeri/Hymenochirus_boettgeri_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Hymenochirus_boettgeri.log
+        
+Submitted job 28 with external jobid 'Submitted batch job 11871661'.
+
+[Wed Apr 15 22:28:57 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lithobates_sylvaticus/Lithobates_sylvaticus_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Lithobates_sylvaticus.log
+    jobid: 42
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lithobates_sylvaticus/Lithobates_sylvaticus_headers.fna
+    wildcards: species=Lithobates_sylvaticus
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lithobates_sylvaticus -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lithobates_sylvaticus/Lithobates_sylvaticus_headers.fna
+        echo "rename_fasta_headers completed for Lithobates_sylvaticus: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lithobates_sylvaticus/Lithobates_sylvaticus_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Lithobates_sylvaticus.log
+        
+Submitted job 42 with external jobid 'Submitted batch job 11871662'.
+
+[Wed Apr 15 22:28:57 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Crinia_signifera/Crinia_signifera_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Crinia_signifera.log
+    jobid: 57
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Crinia_signifera/Crinia_signifera_headers.fna
+    wildcards: species=Crinia_signifera
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Crinia_signifera -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Crinia_signifera/Crinia_signifera_headers.fna
+        echo "rename_fasta_headers completed for Crinia_signifera: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Crinia_signifera/Crinia_signifera_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Crinia_signifera.log
+        
+Submitted job 57 with external jobid 'Submitted batch job 11871663'.
+
+[Wed Apr 15 22:28:58 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelobates_fuscus/Pelobates_fuscus_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pelobates_fuscus.log
+    jobid: 12
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelobates_fuscus/Pelobates_fuscus_headers.fna
+    wildcards: species=Pelobates_fuscus
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelobates_fuscus -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelobates_fuscus/Pelobates_fuscus_headers.fna
+        echo "rename_fasta_headers completed for Pelobates_fuscus: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelobates_fuscus/Pelobates_fuscus_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Pelobates_fuscus.log
+        
+Submitted job 12 with external jobid 'Submitted batch job 11871664'.
+
+[Wed Apr 15 22:28:58 2026]
+rule rename_fasta_headers:
+    output: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ichthyophis_bannanicus/Ichthyophis_bannanicus_headers.fna
+    log: /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Ichthyophis_bannanicus.log
+    jobid: 27
+    reason: Missing output files: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ichthyophis_bannanicus/Ichthyophis_bannanicus_headers.fna
+    wildcards: species=Ichthyophis_bannanicus
+    resources: mem_mb=1000, mem_mib=954, disk_mb=100000, disk_mib=95368, tmpdir=<TBD>, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+
+        GENOME=$(find /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ichthyophis_bannanicus -name '*.fna' ! -name '*cds*' | head -1)
+        awk '/^>/ { sub(/\..*/, ""); } { print }' "$GENOME" > /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ichthyophis_bannanicus/Ichthyophis_bannanicus_headers.fna
+        echo "rename_fasta_headers completed for Ichthyophis_bannanicus: $GENOME -> /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ichthyophis_bannanicus/Ichthyophis_bannanicus_headers.fna" > /user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS/rename_fasta_headers/rename_fasta_headers_Ichthyophis_bannanicus.log
+        
+Submitted job 27 with external jobid 'Submitted batch job 11871665'.
+[Wed Apr 15 22:29:37 2026]
+Finished job 41.
+1 of 63 steps (2%) done
+Waiting at most 60 seconds for missing files.
+[Wed Apr 15 22:29:55 2026]
+Finished job 40.
+2 of 63 steps (3%) done
+[Wed Apr 15 22:29:55 2026]
+Finished job 9.
+3 of 63 steps (5%) done
+[Wed Apr 15 22:29:55 2026]
+Finished job 23.
+4 of 63 steps (6%) done
+[Wed Apr 15 22:29:55 2026]
+Finished job 38.
+5 of 63 steps (8%) done
+[Wed Apr 15 22:29:55 2026]
+Finished job 53.
+6 of 63 steps (10%) done
+[Wed Apr 15 22:29:55 2026]
+Finished job 7.
+7 of 63 steps (11%) done
+[Wed Apr 15 22:29:55 2026]
+Finished job 22.
+8 of 63 steps (13%) done
+[Wed Apr 15 22:29:55 2026]
+Finished job 37.
+9 of 63 steps (14%) done
+[Wed Apr 15 22:29:55 2026]
+Finished job 52.
+10 of 63 steps (16%) done
+[Wed Apr 15 22:29:55 2026]
+Finished job 51.
+11 of 63 steps (17%) done
+[Wed Apr 15 22:29:56 2026]
+Finished job 20.
+12 of 63 steps (19%) done
+[Wed Apr 15 22:30:09 2026]
+Finished job 56.
+13 of 63 steps (21%) done
+[Wed Apr 15 22:30:09 2026]
+Finished job 11.
+14 of 63 steps (22%) done
+[Wed Apr 15 22:30:09 2026]
+Finished job 26.
+15 of 63 steps (24%) done
+[Wed Apr 15 22:30:09 2026]
+Finished job 25.
+16 of 63 steps (25%) done
+[Wed Apr 15 22:30:09 2026]
+Finished job 55.
+17 of 63 steps (27%) done
+[Wed Apr 15 22:30:09 2026]
+Finished job 10.
+18 of 63 steps (29%) done
+[Wed Apr 15 22:30:09 2026]
+Finished job 24.
+19 of 63 steps (30%) done
+[Wed Apr 15 22:30:10 2026]
+Finished job 54.
+20 of 63 steps (32%) done
+[Wed Apr 15 22:30:10 2026]
+Finished job 21.
+21 of 63 steps (33%) done
+[Wed Apr 15 22:30:10 2026]
+Finished job 36.
+22 of 63 steps (35%) done
+[Wed Apr 15 22:30:11 2026]
+Finished job 17.
+23 of 63 steps (37%) done
+[Wed Apr 15 22:30:24 2026]
+Finished job 6.
+24 of 63 steps (38%) done
+[Wed Apr 15 22:30:24 2026]
+Finished job 50.
+25 of 63 steps (40%) done
+[Wed Apr 15 22:30:25 2026]
+Finished job 48.
+26 of 63 steps (41%) done
+[Wed Apr 15 22:30:37 2026]
+Finished job 4.
+27 of 63 steps (43%) done
+[Wed Apr 15 22:30:37 2026]
+Finished job 19.
+28 of 63 steps (44%) done
+[Wed Apr 15 22:30:37 2026]
+Finished job 33.
+29 of 63 steps (46%) done
+[Wed Apr 15 22:30:37 2026]
+Finished job 3.
+30 of 63 steps (48%) done
+[Wed Apr 15 22:30:38 2026]
+Finished job 32.
+31 of 63 steps (49%) done
+[Wed Apr 15 22:30:38 2026]
+Finished job 47.
+32 of 63 steps (51%) done
+[Wed Apr 15 22:30:38 2026]
+Finished job 2.
+33 of 63 steps (52%) done
+Waiting at most 60 seconds for missing files.
+[Wed Apr 15 22:31:08 2026]
+Finished job 62.
+34 of 63 steps (54%) done
+[Wed Apr 15 22:31:08 2026]
+Finished job 16.
+35 of 63 steps (56%) done
+[Wed Apr 15 22:31:08 2026]
+Finished job 31.
+36 of 63 steps (57%) done
+[Wed Apr 15 22:31:08 2026]
+Finished job 61.
+37 of 63 steps (59%) done
+[Wed Apr 15 22:31:08 2026]
+Finished job 60.
+38 of 63 steps (60%) done
+[Wed Apr 15 22:31:09 2026]
+Finished job 1.
+39 of 63 steps (62%) done
+[Wed Apr 15 22:31:19 2026]
+Finished job 8.
+40 of 63 steps (63%) done
+[Wed Apr 15 22:31:19 2026]
+Finished job 5.
+41 of 63 steps (65%) done
+[Wed Apr 15 22:31:19 2026]
+Finished job 18.
+42 of 63 steps (67%) done
+[Wed Apr 15 22:31:19 2026]
+Finished job 46.
+43 of 63 steps (68%) done
+[Wed Apr 15 22:31:19 2026]
+Finished job 30.
+44 of 63 steps (70%) done
+[Wed Apr 15 22:31:20 2026]
+Finished job 45.
+45 of 63 steps (71%) done
+[Wed Apr 15 22:31:20 2026]
+Finished job 14.
+46 of 63 steps (73%) done
+[Wed Apr 15 22:31:20 2026]
+Finished job 29.
+47 of 63 steps (75%) done
+[Wed Apr 15 22:31:20 2026]
+Finished job 43.
+48 of 63 steps (76%) done
+[Wed Apr 15 22:31:20 2026]
+Finished job 58.
+49 of 63 steps (78%) done
+[Wed Apr 15 22:31:31 2026]
+Finished job 39.
+50 of 63 steps (79%) done
+[Wed Apr 15 22:31:31 2026]
+Finished job 34.
+51 of 63 steps (81%) done
+[Wed Apr 15 22:31:31 2026]
+Finished job 28.
+52 of 63 steps (83%) done
+[Wed Apr 15 22:31:42 2026]
+Finished job 59.
+53 of 63 steps (84%) done
+[Wed Apr 15 22:31:42 2026]
+Finished job 13.
+54 of 63 steps (86%) done
+[Wed Apr 15 22:31:42 2026]
+Finished job 57.
+55 of 63 steps (87%) done
+[Wed Apr 15 22:31:42 2026]
+Finished job 12.
+56 of 63 steps (89%) done
+[Wed Apr 15 22:31:52 2026]
+Finished job 35.
+57 of 63 steps (90%) done
+[Wed Apr 15 22:31:52 2026]
+Finished job 44.
+58 of 63 steps (92%) done
+[Wed Apr 15 22:31:52 2026]
+Finished job 42.
+59 of 63 steps (94%) done
+[Wed Apr 15 22:32:22 2026]
+Finished job 49.
+60 of 63 steps (95%) done
+[Wed Apr 15 22:32:22 2026]
+Finished job 27.
+61 of 63 steps (97%) done
+[Wed Apr 15 22:33:42 2026]
+Finished job 15.
+62 of 63 steps (98%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Apr 15 22:33:42 2026]
+localrule all:
+    input: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Spea_multiplicata/Spea_multiplicata_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Mixophyes_fleayi/Mixophyes_fleayi_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Eleutherodactylus_marnockii/Eleutherodactylus_marnockii_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelophylax_lessonae/Pelophylax_lessonae_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bombina_bombina/Bombina_bombina_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinatrema_bivittatum/Rhinatrema_bivittatum_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_kukunoris/Rana_kukunoris_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Triturus_cristatus/Triturus_cristatus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_tropicalis/Xenopus_tropicalis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufo_bufo/Bufo_bufo_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelophylax_nigromaculatus/Pelophylax_nigromaculatus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelobates_fuscus/Pelobates_fuscus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Eleutherodactylus_coqui/Eleutherodactylus_coqui_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hyperolius_riggenbachi/Hyperolius_riggenbachi_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ambystoma_mexicanum/Ambystoma_mexicanum_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_borealis/Xenopus_borealis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Scaphiopus_couchii/Scaphiopus_couchii_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_muscosa/Rana_muscosa_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pseudacris_triseriata/Pseudacris_triseriata_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Spea_bombifrons/Spea_bombifrons_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptodactylus_fuscus/Leptodactylus_fuscus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ptychadena_robeensis/Ptychadena_robeensis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_petersii/Xenopus_petersii_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufo_gargarizans/Bufo_gargarizans_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_chensinensis/Rana_chensinensis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_temporaria/Rana_temporaria_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ichthyophis_bannanicus/Ichthyophis_bannanicus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hymenochirus_boettgeri/Hymenochirus_boettgeri_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Geotrypetes_seraphini/Geotrypetes_seraphini_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hyla_sarda/Hyla_sarda_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_ailaonicum/Leptobrachium_ailaonicum_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinophrynus_dorsalis/Rhinophrynus_dorsalis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ranitomeya_variabilis/Ranitomeya_variabilis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Desmognathus_fuscus/Desmognathus_fuscus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pleurodeles_waltl/Pleurodeles_waltl_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Fejervarya_limnocharis/Fejervarya_limnocharis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ranitomeya_imitator/Ranitomeya_imitator_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Microcaecilia_unicolor/Microcaecilia_unicolor_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lissotriton_helveticus/Lissotriton_helveticus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pyxicephalus_adspersus/Pyxicephalus_adspersus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_leishanense/Leptobrachium_leishanense_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lithobates_sylvaticus/Lithobates_sylvaticus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelobates_cultripes/Pelobates_cultripes_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bombina_variegata/Bombina_variegata_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Discoglossus_pictus/Discoglossus_pictus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Aquarana_catesbeiana/Aquarana_catesbeiana_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufotes_viridis/Bufotes_viridis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinoderma_darwinii/Rhinoderma_darwinii_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lissotriton_vulgaris/Lissotriton_vulgaris_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lithobates_pipiens/Lithobates_pipiens_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ascaphus_truei/Ascaphus_truei_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Dendropsophus_ebraccatus/Dendropsophus_ebraccatus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelodytes_ibericus/Pelodytes_ibericus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Anomaloglossus_baeobatrachus/Anomaloglossus_baeobatrachus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_boringii/Leptobrachium_boringii_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Epidalea_calamita/Epidalea_calamita_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Crinia_signifera/Crinia_signifera_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Mantella_aurantiaca/Mantella_aurantiaca_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pseudophryne_corroboree/Pseudophryne_corroboree_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Engystomops_pustulosus/Engystomops_pustulosus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_laevis/Xenopus_laevis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Gastrophryne_carolinensis/Gastrophryne_carolinensis_headers.fna
+    jobid: 0
+    reason: Input files updated by another job: /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_muscosa/Rana_muscosa_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Dendropsophus_ebraccatus/Dendropsophus_ebraccatus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Epidalea_calamita/Epidalea_calamita_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Microcaecilia_unicolor/Microcaecilia_unicolor_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptodactylus_fuscus/Leptodactylus_fuscus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Aquarana_catesbeiana/Aquarana_catesbeiana_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_borealis/Xenopus_borealis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_kukunoris/Rana_kukunoris_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ranitomeya_variabilis/Ranitomeya_variabilis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Eleutherodactylus_coqui/Eleutherodactylus_coqui_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_boringii/Leptobrachium_boringii_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ptychadena_robeensis/Ptychadena_robeensis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Mixophyes_fleayi/Mixophyes_fleayi_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Triturus_cristatus/Triturus_cristatus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Mantella_aurantiaca/Mantella_aurantiaca_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufo_bufo/Bufo_bufo_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_leishanense/Leptobrachium_leishanense_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pseudophryne_corroboree/Pseudophryne_corroboree_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Eleutherodactylus_marnockii/Eleutherodactylus_marnockii_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelodytes_ibericus/Pelodytes_ibericus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ichthyophis_bannanicus/Ichthyophis_bannanicus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lithobates_sylvaticus/Lithobates_sylvaticus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lithobates_pipiens/Lithobates_pipiens_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelophylax_lessonae/Pelophylax_lessonae_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_tropicalis/Xenopus_tropicalis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pyxicephalus_adspersus/Pyxicephalus_adspersus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hyperolius_riggenbachi/Hyperolius_riggenbachi_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Anomaloglossus_baeobatrachus/Anomaloglossus_baeobatrachus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Geotrypetes_seraphini/Geotrypetes_seraphini_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Scaphiopus_couchii/Scaphiopus_couchii_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bombina_variegata/Bombina_variegata_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Engystomops_pustulosus/Engystomops_pustulosus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hyla_sarda/Hyla_sarda_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_chensinensis/Rana_chensinensis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ranitomeya_imitator/Ranitomeya_imitator_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufo_gargarizans/Bufo_gargarizans_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinoderma_darwinii/Rhinoderma_darwinii_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Desmognathus_fuscus/Desmognathus_fuscus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bufotes_viridis/Bufotes_viridis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Leptobrachium_ailaonicum/Leptobrachium_ailaonicum_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ascaphus_truei/Ascaphus_truei_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Spea_multiplicata/Spea_multiplicata_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rana_temporaria/Rana_temporaria_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinatrema_bivittatum/Rhinatrema_bivittatum_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pleurodeles_waltl/Pleurodeles_waltl_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelobates_cultripes/Pelobates_cultripes_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lissotriton_vulgaris/Lissotriton_vulgaris_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_laevis/Xenopus_laevis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Bombina_bombina/Bombina_bombina_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pseudacris_triseriata/Pseudacris_triseriata_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Ambystoma_mexicanum/Ambystoma_mexicanum_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Lissotriton_helveticus/Lissotriton_helveticus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Fejervarya_limnocharis/Fejervarya_limnocharis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Crinia_signifera/Crinia_signifera_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Rhinophrynus_dorsalis/Rhinophrynus_dorsalis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Spea_bombifrons/Spea_bombifrons_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Gastrophryne_carolinensis/Gastrophryne_carolinensis_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Discoglossus_pictus/Discoglossus_pictus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Xenopus_petersii/Xenopus_petersii_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelobates_fuscus/Pelobates_fuscus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Pelophylax_nigromaculatus/Pelophylax_nigromaculatus_headers.fna, /data/brussel/vo/000/bvo00034/vsc10945/Genomes/Hymenochirus_boettgeri/Hymenochirus_boettgeri_headers.fna
+    resources: mem_mb=8000, mem_mib=7630, disk_mb=100000, disk_mib=95368, tmpdir=/tmp, nodes=1, tasks=1, cpus_per_task=6, mem_mb_per_cpu=4000, runtime=4320, partition=zen4,zen5_mpi
+
+[Wed Apr 15 22:33:42 2026]
+Finished job 0.
+63 of 63 steps (100%) done
+Complete log: .snakemake/log/2026-04-15T222852.064601.snakemake.log

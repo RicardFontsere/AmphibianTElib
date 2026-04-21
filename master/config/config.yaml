@@ -1,0 +1,3 @@
+genomes_dir: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/Genomes"
+log_dir: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS"
+curatedlib: "/user/brussel/109/vsc10945/home/scratch/TE/Libraries/repbase/31/RepBase31.03.fasta/vrtrep.ref"
