@@ -20,4 +20,4 @@ default-resources:
      - mem_mb_per_cpu=4000
      - runtime=4320
      - disk_mb=100000
-     - partition=zen4,zen5_mpi
+     - partition=zen5_mpi

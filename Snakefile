@@ -1,18 +1,19 @@
 import os
 
-configfile: "config.yaml"
+GENOMES_DIR = config["GENOMES_DIR"]
+GENOMES_SOURCE_DIR = config["GENOMES_SOURCE_DIR"]
+LOG_DIR = config["LOG_DIR"]
+CURATEDLIB = config["CURATEDLIB"]
 
-GENOMES_DIR = config["genomes_dir"]
-LOG_DIR = config["log_dir"]
-CURATEDLIB = config["curatedlib"]
 SPECIES = [d for d in os.listdir(GENOMES_DIR)
             if os.path.isdir(os.path.join(GENOMES_DIR, d))]
 
-include: "rules/rename_headers.smk"
-include: "rules/EDTA.smk"
-#include: "rules/EDTA_TIR.smk"
+#include: "rules/rename_headers.smk"
+#include: "rules/EDTA.smk"
 
+include: "rules/RM_DATABASE.smk"
+include: "rules/RM2.smk"
 rule all:
     input:
-        expand(os.path.join(GENOMES_DIR, "{species}", "{species}.denovo"), species=SPECIES)
-
+        expand(os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}.builddb.done"), species=SPECIES),
+        expand(os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}.repeatmodeler.done"), species=SPECIES)
