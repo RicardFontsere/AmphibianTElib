@@ -13,7 +13,9 @@ SPECIES = [d for d in os.listdir(GENOMES_DIR)
 
 include: "rules/RM_DATABASE.smk"
 include: "rules/RM2.smk"
+include: "rules/TETRIMMER.smk"
 rule all:
     input:
         expand(os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}.builddb.done"), species=SPECIES),
-        expand(os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}.repeatmodeler.done"), species=SPECIES)
+        expand(os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}.repeatmodeler.done"), species=SPECIES),
+        expand(os.path.join(GENOMES_DIR, "{species}", "TEtrimmer", "{species}.tetrimmer.done"), species=SPECIES)
