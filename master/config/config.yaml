@@ -1,4 +1,5 @@
 GENOMES_DIR: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/Genomes"
+GENOMES_DIR_DONE: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/CompletedRuns"
 GENOMES_SOURCE_DIR: "/data/brussel/vo/000/bvo00034/vsc10945/Genomes"
 LOG_DIR: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS"
 CURATEDLIB: "/user/brussel/109/vsc10945/home/scratch/TE/Libraries/Ranidae/4.0_onlymanual/4.0onlymanual.fasta"
