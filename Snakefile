@@ -6,17 +6,17 @@ GENOMES_SOURCE_DIR = config["GENOMES_SOURCE_DIR"]
 LOG_DIR = config["LOG_DIR"]
 CURATEDLIB = config["CURATEDLIB"]
 
-SPECIES = [d for d in os.listdir(GENOMES_DIR)
-            if os.path.isdir(os.path.join(GENOMES_DIR, d))]
+SPECIES = [d for d in os.listdir(GENOMES_DIR_DONE)
+            if os.path.isdir(os.path.join(GENOMES_DIR_DONE, d))]
 
 #include: "rules/rename_headers.smk"
-#include: "rules/EDTA.smk"
-
+#include: "rules/EDTA_HELITRON.smk"
 include: "rules/RM_DATABASE.smk"
 include: "rules/RM2.smk"
 include: "rules/TETRIMMER.smk"
 rule all:
     input:
-        expand(os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}.builddb.done"), species=SPECIES),
-        expand(os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}.repeatmodeler.done"), species=SPECIES),
-        expand(os.path.join(GENOMES_DIR, "{species}", "TEtrimmer", "{species}.tetrimmer.done"), species=SPECIES)
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}.builddb.done"), species=SPECIES),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}.repeatmodeler.done"), species=SPECIES),
+        #expand(os.path.join(GENOMES_DIR_DONE, "{species}", "{species}_helitron.denovo"), species=SPECIES),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done"), species=SPECIES)
