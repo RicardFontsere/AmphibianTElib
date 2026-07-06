@@ -1,12 +1,11 @@
 rule TETRIMMER:
     """Run TEtrimmer to clean and classify the RepeatModeler raw library against the genome."""
     input:
-        rm_done = os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}.repeatmodeler.done"),
+        library = os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}_rm1.0.fasta"),
         genome  = os.path.join(GENOMES_DIR, "{species}", "{species}_headers.fna")
     output:
         done = os.path.join(GENOMES_DIR, "{species}", "TEtrimmer", "{species}.tetrimmer.done")
     params:
-        input_file        = os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}-families.fa"),
         output_dir        = os.path.join(GENOMES_DIR, "{species}", "TEtrimmer"),
         pfam_dir          = config["PFAM_DIR"],
         max_msa_lines     = 100,
@@ -25,7 +24,7 @@ rule TETRIMMER:
     shell:
         """
         TEtrimmer \
-            --input_file {params.input_file} \
+            --input_file {input.library} \
             --genome_file {input.genome} \
             --output_dir {params.output_dir} \
             --pfam_dir {params.pfam_dir} \
