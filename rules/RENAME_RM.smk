@@ -11,16 +11,19 @@ def species_prefix(wildcards):
 rule RENAME_RM_LIB:
     """Linearise the RepeatModeler library and rename its headers with a short species prefix."""
     input:
-        rm_done  = os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}.repeatmodeler.done"),
-        families = os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}-families.fa")
+        families = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}-families.fa")
     output:
-        renamed = os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}_rm1.0.fasta")
+        renamed = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0.fasta")
     params:
         prefix = species_prefix,
         script = os.path.join(workflow.basedir, "scripts", "renameRMDLconsensi.pl"),
-        tmp    = os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}_rm1.0_temp.fasta")
+        tmp    = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0_temp.fasta")
     log:
         os.path.join(LOG_DIR, "RenameRM", "rename_{species}.log")
+    resources:
+        cpus_per_task  = 1,
+        mem_mb_per_cpu = 2000,
+        runtime        = 20
     envmodules:
         "Perl-bundle-CPAN/5.40.0-GCCcore-14.2.0"
     shell:

@@ -1,10 +1,10 @@
 rule TETRIMMER:
     """Run TEtrimmer to clean and classify the RepeatModeler raw library against the genome."""
     input:
-        genome  = os.path.join(GENOMES_DIR_DONE, "{species}", "{species}_headers.fna")
+        genome  = os.path.join(GENOMES_DIR_DONE, "{species}", "{species}_headers.fna"),
         library = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0.fasta"),
     output:
-        done = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done")
+        done = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done"),
     params:
         input_file         = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}-families.fa"),
         output_dir         = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer"),
@@ -15,7 +15,7 @@ rule TETRIMMER:
     resources:
         cpus_per_task  = 32,
         mem_mb_per_cpu = 14000,
-        runtime        = 3000
+        runtime        = 2400
     envmodules:
         "TEtrimmer/1.7.2-foss-2025a",
     shell:
