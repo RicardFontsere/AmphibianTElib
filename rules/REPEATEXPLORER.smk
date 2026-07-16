@@ -32,17 +32,35 @@ rule SHORT_READ_PREP:
         r"""
         exec &> {log}; set -euo pipefail
         S={wildcards.species}; cd {params.workdir}
+        echo "[$S] === SHORT_READ_PREP $(date) ==="
+
         samtools faidx {input.genome}
-        N=$(awk -v c={params.coverage} -v l={params.readlen} '{{g+=$2}} END{{printf "%d",(c*g)/(2*l)}}' {input.genome}.fai)
+        GENOME=$(awk '{{g+=$2}} END{{print g}}' {input.genome}.fai)
+        N=$(awk -v c={params.coverage} -v l={params.readlen} -v g="$GENOME" 'BEGIN{{printf "%d",(c*g)/(2*l)}}')
+        IN=$(zcat {input.r1} | awk 'END{{print NR/4}}')
+        echo "[$S] genome length       : $GENOME bp"
+        echo "[$S] input read pairs     : $IN"
+        echo "[$S] pairs needed ({params.coverage}x): $N"
+
         fastp -i {input.r1} -I {input.r2} -o $S.qc_1.fq.gz -O $S.qc_2.fq.gz \
           --qualified_quality_phred 10 --unqualified_percent_limit 5 --n_base_limit 0 \
           --length_required {params.readlen} --disable_adapter_trimming --thread {resources.cpus_per_task} \
           -j $S.fastp.json -h $S.fastp.html
+        QC=$(zcat $S.qc_1.fq.gz | awk 'END{{print NR/4}}')
+        echo "[$S] pairs surviving QC   : $QC  (dropped $((IN-QC)))"
+        [ "$QC" -ge "$N" ] || echo "[$S] WARNING: only $QC pairs survived QC, fewer than the $N needed for {params.coverage}x"
+
         {params.seqtk} sample -s{params.seed} $S.qc_1.fq.gz $N | {params.seqtk} trimfq -L {params.readlen} - \
           | {params.seqtk} seq -A - | awk '/^>/{{printf ">%07d/1\n",++n;next}}1' > $S.1.fa
         {params.seqtk} sample -s{params.seed} $S.qc_2.fq.gz $N | {params.seqtk} trimfq -L {params.readlen} - \
           | {params.seqtk} seq -A - | awk '/^>/{{printf ">%07d/2\n",++n;next}}1' > $S.2.fa
+        KEPT=$(grep -c '^>' $S.1.fa || true)
+        echo "[$S] pairs after subsample+trim to {params.readlen} bp: $KEPT"
+
         {params.seqtk} mergepe $S.1.fa $S.2.fa > {output.interleaved}
+        TOTAL=$(grep -c '^>' {output.interleaved} || true)
+        echo "[$S] interleaved reads    : $TOTAL  (expected ~2 x $KEPT)"
+        echo "[$S] === done $(date) ==="
         """
 
 
