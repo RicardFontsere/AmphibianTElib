@@ -1,10 +1,19 @@
+def repeatexplorer_reads(wildcards):
+    """Return the paired-end read pair (R1, R2) for a species.
+
+    Species without a usable pair are filtered out of SPECIES_WITH_READS before
+    the DAG is built, so this always finds a pair for the species it is called on.
+    """
+    r1, r2 = find_reads(wildcards.species)
+    return {"r1": r1, "r2": r2}
+
+
 rule SHORT_READ_PREP:
     """fastp QC, subsample to target coverage, hard-trim to uniform length,
     recode headers and interleave the mates for RepeatExplorer2."""
     input:
+        unpack(repeatexplorer_reads),
         genome = os.path.join(GENOMES_DIR_DONE, "{species}", "{species}_headers.fna"),
-        r1 = lambda wc: find_reads(wc.species)[0],
-        r2 = lambda wc: find_reads(wc.species)[1],
     output:
         interleaved = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "{species}_reads_interleaved.fasta"),
     params:
