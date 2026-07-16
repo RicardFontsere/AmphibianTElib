@@ -13,9 +13,9 @@ rule TETRIMMER:
     log:
         os.path.join(LOG_DIR, "TEtrimmer", "tetrimmer_{species}.log")
     resources:
-        cpus_per_task  = 32,
-        mem_mb_per_cpu = 14000,
-        runtime        = 2400
+        cpus_per_task  = 16,
+        mem_mb_per_cpu = 28000,
+        runtime        = 2200
     envmodules:
         "TEtrimmer/1.7.2-foss-2025a",
     shell:

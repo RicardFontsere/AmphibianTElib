@@ -33,4 +33,5 @@ rule RENAME_RM_LIB:
             | awk 'NR > 1' > {params.tmp} 2> {log}
         perl {params.script} {params.tmp} {params.prefix} {output.renamed} 2>> {log}
         rm -f {params.tmp}
+        echo "Finished renaming RepeatModeler library for {wildcards.species} " >> {log}
         """
