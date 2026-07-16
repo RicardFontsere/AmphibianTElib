@@ -6,7 +6,7 @@ CURATEDLIB: "/user/brussel/109/vsc10945/home/scratch/TE/Libraries/Ranidae/4.0_on
 PFAM_DIR: "/user/brussel/109/vsc10945/home/scratch/TE/ManualCuration/Databases"
 
 # --- RepeatExplorer2 short-read branch ---
-READS_DIR: "<FILL IN>"                            # parent of per-species read subdirs
+READS_DIR: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/Reads"                            # parent of per-species read subdirs
 REPEATEXPLORER_SIF: "/user/brussel/109/vsc10945/home/scratch/Software/repeatexplorer2/repeatexplorer.sif"
 SEQTK: "/rhea/scratch/brussel/vo/000/bvo00034/vsc10945/Software/bin/seqtk"
 RE_TAXON: "METAZOA3.0"
