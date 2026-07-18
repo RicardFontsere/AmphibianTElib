@@ -45,24 +45,17 @@ for f in info_files:
     for header, seq in read_fasta(f):
         records[header.split()[0]] = (header, seq)
 
-# 2. Parse cluster id, contig id and coverage from each header.
-#    Headers look like "CL2Contig1 <n> <len> <coverage>". satMiner read the
-#    coverage from a fixed positional field; we take the last numeric token,
-#    which is where RE2 puts read depth and is robust to spacing differences.
+# 2. Parse cluster id, contig id and read depth from each header, using
+#    satMiner's exact split. RE2 headers look like "CL78Contig1 (317-6.5-2054)"
+#    = (length-readdepth-xxxx); splitting on CL / Contig / '-' / space yields
+#    ['', '78', '1', '(317', '6.5', '2054)'] so field 1 = cluster, 2 = contig,
+#    4 = read depth (the value we rank contigs by).
 cov_by_cluster = {}  # {CL: {contig: coverage}}
 for cid, (header, _seq) in records.items():
-    m = re.match(r"CL(\d+)Contig(\d+)", cid)
-    if not m:
-        continue
-    cl, contig = m.group(1), m.group(2)
-    cov = None
-    for tok in reversed(header.split()):
-        try:
-            cov = float(tok)
-            break
-        except ValueError:
-            continue
-    if cov is None:
+    info = re.split(r"CL|Contig|\055| ", header)
+    try:
+        cl, contig, cov = info[1], info[2], float(info[4])
+    except (IndexError, ValueError):
         continue
     cov_by_cluster.setdefault(cl, {})[contig] = cov
 
