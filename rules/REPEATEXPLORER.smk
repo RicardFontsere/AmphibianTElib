@@ -25,9 +25,10 @@ rule SHORT_READ_PREP:
     log:
         os.path.join(LOG_DIR, "RepeatExplorer", "prep_{species}.log")
     resources:
-        cpus_per_task = 64, mem_mb_per_cpu = 2000, runtime = 720
+        cpus_per_task = 16, mem_mb_per_cpu = 2000, runtime = 300
     envmodules:
-        "SAMtools/1.21-GCC-13.3.0", "fastp/1.0.1-GCC-13.3.0"
+        "SAMtools/1.21-GCC-13.3.0", 
+        "fastp/1.0.1-GCC-13.3.0"
     shell:
         r"""
         exec &> {log}; set -euo pipefail
