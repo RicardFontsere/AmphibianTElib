@@ -25,7 +25,7 @@ rule SHORT_READ_PREP:
     log:
         os.path.join(LOG_DIR, "RepeatExplorer", "prep_{species}.log")
     resources:
-        cpus_per_task = 16, mem_mb_per_cpu = 2000, runtime = 300
+        cpus_per_task = 16, mem_mb_per_cpu = 1000, runtime = 250
     envmodules:
         "SAMtools/1.21-GCC-13.3.0", 
         "fastp/1.0.1-GCC-13.3.0"
@@ -45,7 +45,7 @@ rule SHORT_READ_PREP:
 
         fastp -i {input.r1} -I {input.r2} -o $S.qc_1.fq.gz -O $S.qc_2.fq.gz \
           --qualified_quality_phred 10 --unqualified_percent_limit 5 --n_base_limit 0 \
-          --length_required {params.readlen} --disable_adapter_trimming --thread {resources.cpus_per_task} \
+          --length_required {params.readlen} --thread {resources.cpus_per_task} \
           -j $S.fastp.json -h $S.fastp.html
         QC=$(zcat $S.qc_1.fq.gz | awk 'END{{print NR/4}}')
         echo "[$S] pairs surviving QC   : $QC  (dropped $((IN-QC)))"
@@ -77,13 +77,13 @@ rule REPEATEXPLORER:
     log:
         os.path.join(LOG_DIR, "RepeatExplorer", "repeatexplorer_{species}.log")
     resources:
-        cpus_per_task = 64, mem_mb_per_cpu = 2000, runtime = 2880
+        cpus_per_task = 20, mem_mb_per_cpu = 12000, runtime = 3000
     shell:
         r"""
         exec &> {log}; set -euo pipefail
         export PYTHONHASHSEED=0; cd {params.workdir}; rm -rf re_output
         apptainer exec --bind "$PWD":/data/ {params.sif} \
-          /repex_tarean/seqclust -p -c {resources.cpus_per_task} -A -r 100000000 \
+          /repex_tarean/seqclust -p -c {resources.cpus_per_task} -A -r 204000000 \
           -tax {params.taxon} -m 0.001 -v /data/re_output /data/{wildcards.species}_reads_interleaved.fasta
         touch {output.done}
         """
