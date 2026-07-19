@@ -157,6 +157,11 @@ rule DEPLETE_READS:
         N=$(awk -v c={params.coverage2} -v l={params.readlen} -v g="$GENOME" 'BEGIN{{printf "%d",(c*g)/(2*l)}}')
         echo "[$S] R2 target pairs ({params.coverage2}x): $N"
 
+        # Enough-reads check: the round-2 subsample is drawn from the round-1 QC pool.
+        QC=$(zcat {input.qc1} | awk 'END{{print NR/4}}')
+        echo "[$S] QC pairs available   : $QC"
+        [ "$QC" -ge "$N" ] || echo "[$S] WARNING: only $QC QC pairs available, fewer than the $N needed for {params.coverage2}x"
+
         # Larger subsample from the round-1 QC reads (shared seed keeps mates paired).
         {params.seqtk} sample -s{params.seed} {input.qc1} $N > r2_1.fq
         {params.seqtk} sample -s{params.seed} {input.qc2} $N > r2_2.fq
