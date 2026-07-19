@@ -15,6 +15,7 @@ SEQTK = config["SEQTK"]
 RE_TAXON = config["RE_TAXON"]
 RE_COVERAGE = config["RE_COVERAGE"]
 RE_COVERAGE_R2 = config["RE_COVERAGE_R2"]
+RE_MINCL = config["RE_MINCL"]
 RE_READLEN = config["RE_READLEN"]
 RE_SEED = config["RE_SEED"]
 
