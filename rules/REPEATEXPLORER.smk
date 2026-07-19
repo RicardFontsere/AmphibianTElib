@@ -22,7 +22,7 @@ def repeatexplorer_reads(wildcards):
 
 rule SHORT_READ_PREP:
     """Round 1 prep: fastp QC, subsample to target coverage, hard-trim to a
-    uniform length, keep original read names, and interleave the mates."""
+    uniform length, recode with short coded names, and interleave the mates."""
     input:
         unpack(repeatexplorer_reads),
         genome = os.path.join(GENOMES_DIR_DONE, "{species}", "{species}_headers.fna"),
@@ -71,12 +71,12 @@ rule SHORT_READ_PREP:
         echo "[$S] QC: $QC pairs survived (dropped $((IN-QC)))"
         [ "$QC" -ge "$N" ] || echo "[$S] WARNING: QC pairs $QC < target $N"
 
-        # Subsample -> trim to uniform length -> keep the original read name with a
-        # /1 or /2 mate tag (so seqclust -k can preserve them) -> interleave mates.
+        # Subsample -> trim to uniform length -> recode with short coded names
+        # (%07d + /1,/2 mate tag) -> interleave mates.
         {params.seqtk} sample -s{params.seed} {output.qc1} $N | {params.seqtk} trimfq -L {params.readlen} - \
-          | {params.seqtk} seq -A - | awk '/^>/{{print $1"/1"; next}}1' > $S.1.fa
+          | {params.seqtk} seq -A - | awk '/^>/{{printf ">%07d/1\n",++n; next}}1' > $S.1.fa
         {params.seqtk} sample -s{params.seed} {output.qc2} $N | {params.seqtk} trimfq -L {params.readlen} - \
-          | {params.seqtk} seq -A - | awk '/^>/{{print $1"/2"; next}}1' > $S.2.fa
+          | {params.seqtk} seq -A - | awk '/^>/{{printf ">%07d/2\n",++n; next}}1' > $S.2.fa
         {params.seqtk} mergepe $S.1.fa $S.2.fa > {output.interleaved}
         echo "[$S] interleaved $(grep -c '^>' {output.interleaved}) reads ($(grep -c '^>' $S.1.fa) pairs)"
 
@@ -106,15 +106,18 @@ rule REPEATEXPLORER:
         exec &> {log}
         set -euo pipefail
         export PYTHONHASHSEED=0
+        S={wildcards.species}
         cd {params.workdir}
         rm -rf re_output                       # seqclust must create the output dir itself
         RAM_KB=$(( {resources.cpus_per_task} * {resources.mem_mb_per_cpu} * 1000 ))
-        # -p paired, -A auto-filter, -k keep read names, -r max RAM (kB), -m min cluster %
+        echo "[$S] REPEATEXPLORER $(date +%F_%T) | input $(grep -c '^>' ${{S}}_reads_interleaved.fasta) reads | RAM ${{RAM_KB}} kB"
+        # -p paired, -A auto-filter, -r max RAM (kB), -m min cluster %
         apptainer exec --bind "$PWD":/data/ {params.sif} \
-          /repex_tarean/seqclust -p -A -k -c {resources.cpus_per_task} -r $RAM_KB \
+          /repex_tarean/seqclust -p -A -c {resources.cpus_per_task} -r $RAM_KB \
           -m {params.mincl} -tax {params.taxon} \
-          -v /data/re_output /data/{wildcards.species}_reads_interleaved.fasta
+          -v /data/re_output /data/${{S}}_reads_interleaved.fasta
         touch {output.done}
+        echo "[$S] REPEATEXPLORER done $(date +%F_%T) -> re_output"
         """
 
 
@@ -199,11 +202,11 @@ rule DEPLETE_READS:
         echo "[$S] depletion: $SAMPLED sampled -> $KEPT kept (removed $((SAMPLED-KEPT)) matching known repeats)"
 
         # QC already enforced length >= readlen, so trimfq drops nothing and the mates
-        # stay in lockstep. Keep original names (+ /1,/2) as in round 1, then interleave.
+        # stay in lockstep. Recode with short coded names as in round 1, then interleave.
         {params.seqtk} trimfq -L {params.readlen} clean_1.fq | {params.seqtk} seq -A - \
-          | awk '/^>/{{print $1"/1"; next}}1' > d1.fa
+          | awk '/^>/{{printf ">%07d/1\n",++n; next}}1' > d1.fa
         {params.seqtk} trimfq -L {params.readlen} clean_2.fq | {params.seqtk} seq -A - \
-          | awk '/^>/{{print $1"/2"; next}}1' > d2.fa
+          | awk '/^>/{{printf ">%07d/2\n",++n; next}}1' > d2.fa
         {params.seqtk} mergepe d1.fa d2.fa > {output.depleted}
         echo "[$S] depleted interleaved $(grep -c '^>' {output.depleted}) reads -> RepeatExplorer round 2"
 
@@ -233,12 +236,15 @@ rule REPEATEXPLORER_R2:
         exec &> {log}
         set -euo pipefail
         export PYTHONHASHSEED=0
+        S={wildcards.species}
         cd {params.workdir}
         rm -rf re_output_r2
         RAM_KB=$(( {resources.cpus_per_task} * {resources.mem_mb_per_cpu} * 1000 ))
+        echo "[$S] REPEATEXPLORER_R2 $(date +%F_%T) | input $(grep -c '^>' ${{S}}_depleted_r2.fasta) reads | RAM ${{RAM_KB}} kB"
         apptainer exec --bind "$PWD":/data/ {params.sif} \
-          /repex_tarean/seqclust -p -A -k -c {resources.cpus_per_task} -r $RAM_KB \
+          /repex_tarean/seqclust -p -A -c {resources.cpus_per_task} -r $RAM_KB \
           -m {params.mincl} -tax {params.taxon} \
-          -v /data/re_output_r2 /data/{wildcards.species}_depleted_r2.fasta
+          -v /data/re_output_r2 /data/${{S}}_depleted_r2.fasta
         touch {output.done}
+        echo "[$S] REPEATEXPLORER_R2 done $(date +%F_%T) -> re_output_r2"
         """
