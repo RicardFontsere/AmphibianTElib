@@ -39,7 +39,7 @@ rule SHORT_READ_PREP:
         seed     = RE_SEED,
         workdir  = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer"),
     log:
-        os.path.join(LOG_DIR, "RepeatExplorer", "prep_{species}.log")
+        os.path.join(LOG_DIR, "RepeatExplorer", "Prep", "prep_{species}.log")
     resources:
         cpus_per_task  = 16,
         mem_mb_per_cpu = 1000,
@@ -96,11 +96,11 @@ rule REPEATEXPLORER:
         mincl   = RE_MINCL,
         workdir = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer"),
     log:
-        os.path.join(LOG_DIR, "RepeatExplorer", "repeatexplorer_{species}.log")
+        os.path.join(LOG_DIR, "RepeatExplorer", "Run1", "repeatexplorer_{species}.log")
     resources:
         cpus_per_task  = 20,
-        mem_mb_per_cpu = 12000,
-        runtime        = 3000,
+        mem_mb_per_cpu = 3200,
+        runtime        = 7200,
     shell:
         r"""
         exec &> {log}
@@ -133,7 +133,7 @@ rule COLLECT_KNOWN_REPEATS:
         clusters = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "re_output", "seqclust", "clustering", "clusters"),
         script   = os.path.join(workflow.basedir, "scripts", "collect_known_repeats.py"),
     log:
-        os.path.join(LOG_DIR, "RepeatExplorer", "collect_known_{species}.log")
+        os.path.join(LOG_DIR, "RepeatExplorer", "CollectKnown", "collect_known_{species}.log")
     resources:
         cpus_per_task  = 1,
         mem_mb_per_cpu = 4000,
@@ -164,7 +164,7 @@ rule DEPLETE_READS:
         coverage2 = RE_COVERAGE_R2,
         workdir   = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer"),
     log:
-        os.path.join(LOG_DIR, "RepeatExplorer", "deplete_{species}.log")
+        os.path.join(LOG_DIR, "RepeatExplorer", "Run2", "deplete_{species}.log")
     resources:
         cpus_per_task  = 32,
         mem_mb_per_cpu = 4000,
@@ -226,7 +226,7 @@ rule REPEATEXPLORER_R2:
         mincl   = RE_MINCL,
         workdir = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer"),
     log:
-        os.path.join(LOG_DIR, "RepeatExplorer", "repeatexplorer_r2_{species}.log")
+        os.path.join(LOG_DIR, "RepeatExplorer", "Run2", "repeatexplorer_r2_{species}.log")
     resources:
         cpus_per_task  = 20,
         mem_mb_per_cpu = 12000,
@@ -263,7 +263,7 @@ rule FASTQC_RAW:
     params:
         outdir = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "fastqc"),
     log:
-        os.path.join(LOG_DIR, "RepeatExplorer", "fastqc_{species}.log")
+        os.path.join(LOG_DIR, "RepeatExplorer", "QC", "fastqc_{species}.log")
     resources:
         cpus_per_task  = 2,
         mem_mb_per_cpu = 2000,
@@ -290,7 +290,7 @@ rule FASTP_OVERLAP:
         json = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "{species}.overlap.json"),
         html = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "{species}.overlap.html"),
     log:
-        os.path.join(LOG_DIR, "RepeatExplorer", "fastp_overlap_{species}.log")
+        os.path.join(LOG_DIR, "RepeatExplorer", "QC", "fastp_overlap_{species}.log")
     resources:
         cpus_per_task  = 8,
         mem_mb_per_cpu = 2000,
