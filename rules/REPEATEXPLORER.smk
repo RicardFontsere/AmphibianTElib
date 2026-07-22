@@ -248,3 +248,63 @@ rule REPEATEXPLORER_R2:
         touch {output.done}
         echo "[$S] REPEATEXPLORER_R2 done $(date +%F_%T) -> re_output_r2"
         """
+
+
+# ===========================================================================
+# Raw-read QC (reporting only; reads are never modified)
+# ===========================================================================
+
+rule FASTQC_RAW:
+    """FastQC report on the raw reads."""
+    input:
+        unpack(repeatexplorer_reads),
+    output:
+        done = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "{species}.fastqc.done"),
+    params:
+        outdir = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "fastqc"),
+    log:
+        os.path.join(LOG_DIR, "RepeatExplorer", "fastqc_{species}.log")
+    resources:
+        cpus_per_task  = 2,
+        mem_mb_per_cpu = 2000,
+        runtime        = 120,
+    envmodules:
+        "FastQC/0.12.1-Java-11",     # adjust to the FastQC module on your cluster
+    shell:
+        r"""
+        exec &> {log}
+        set -euo pipefail
+        mkdir -p {params.outdir}
+        fastqc -t {resources.cpus_per_task} -o {params.outdir} {input.r1} {input.r2}
+        touch {output.done}
+        """
+
+
+rule FASTP_OVERLAP:
+    """fastp overlap analysis on the raw reads, report only: no -o/-O so no reads
+    are written (raw untouched) and nothing is merged. Reports overlapping pairs,
+    insert size and overlap-based adapter detection (-2) in the JSON/HTML."""
+    input:
+        unpack(repeatexplorer_reads),
+    output:
+        json = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "{species}.overlap.json"),
+        html = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "{species}.overlap.html"),
+    log:
+        os.path.join(LOG_DIR, "RepeatExplorer", "fastp_overlap_{species}.log")
+    resources:
+        cpus_per_task  = 8,
+        mem_mb_per_cpu = 2000,
+        runtime        = 120,
+    envmodules:
+        "fastp/1.0.1-GCC-13.3.0",
+    shell:
+        r"""
+        exec &> {log}
+        set -euo pipefail
+        # No -o/-O => fastp writes no reads (raw untouched); PE overlap analysis is
+        # automatic; -2 adds overlap-based adapter detection to the report.
+        fastp -i {input.r1} -I {input.r2} \
+          --detect_adapter_for_pe \
+          --thread {resources.cpus_per_task} \
+          -j {output.json} -h {output.html}
+        """
