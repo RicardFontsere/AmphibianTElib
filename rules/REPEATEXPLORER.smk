@@ -281,11 +281,12 @@ rule FASTQC_RAW:
 
 
 rule FASTP_OVERLAP:
-    """fastp overlap analysis on the raw reads, report only: no -o/-O so no reads
-    are written (raw untouched) and nothing is merged. Reports overlapping pairs,
-    insert size and overlap-based adapter detection (-2) in the JSON/HTML."""
+    """fastp overlap analysis on the QC'd reads from SHORT_READ_PREP, report only:
+    no -o/-O so no reads are written and nothing is merged. Reports overlapping
+    pairs, insert size and overlap-based adapter detection (-2) in the JSON/HTML."""
     input:
-        unpack(repeatexplorer_reads),
+        qc1 = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "{species}.qc_1.fq.gz"),
+        qc2 = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "{species}.qc_2.fq.gz"),
     output:
         json = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "{species}.overlap.json"),
         html = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "{species}.overlap.html"),
@@ -301,9 +302,9 @@ rule FASTP_OVERLAP:
         r"""
         exec &> {log}
         set -euo pipefail
-        # No -o/-O => fastp writes no reads (raw untouched); PE overlap analysis is
-        # automatic; -2 adds overlap-based adapter detection to the report.
-        fastp -i {input.r1} -I {input.r2} \
+        # No -o/-O => fastp writes no reads (inputs untouched); PE overlap analysis
+        # is automatic; -2 adds overlap-based adapter detection to the report.
+        fastp -i {input.qc1} -I {input.qc2} \
           --detect_adapter_for_pe \
           --thread {resources.cpus_per_task} \
           -j {output.json} -h {output.html}
