@@ -41,9 +41,9 @@ rule SHORT_READ_PREP:
     log:
         os.path.join(LOG_DIR, "RepeatExplorer", "Prep", "prep_{species}.log")
     resources:
-        cpus_per_task  = 16,
+        cpus_per_task  = 8,
         mem_mb_per_cpu = 1000,
-        runtime        = 250,
+        runtime        = 1200,
     envmodules:
         "SAMtools/1.21-GCC-13.3.0",
         "fastp/1.0.1-GCC-13.3.0",
@@ -62,27 +62,27 @@ rule SHORT_READ_PREP:
         IN=$(zcat {input.r1} | awk 'END{{print NR/4}}')
         echo "[$S] genome $GENOME bp | target {params.coverage}x = $N pairs | input $IN pairs"
 
-        # Quality FILTER only (uniform length is enforced below by trimfq -L).
+        # Quality FILTER + uniform length, adapter trimming
         fastp -i {input.r1} -I {input.r2} -o {output.qc1} -O {output.qc2} \
           --qualified_quality_phred 10 --unqualified_percent_limit 5 --n_base_limit 0 \
+          --detect_adapter_for_pe --max_len1 {params.readlen} --max_len2 {params.readlen} \
           --length_required {params.readlen} --thread {resources.cpus_per_task} \
           -j {output.fastp_json} -h {output.fastp_html}
         QC=$(zcat {output.qc1} | awk 'END{{print NR/4}}')
         echo "[$S] QC: $QC pairs survived (dropped $((IN-QC)))"
         [ "$QC" -ge "$N" ] || echo "[$S] WARNING: QC pairs $QC < target $N"
 
-        # Subsample -> trim to uniform length -> recode with short coded names
+        # Subsample -> recode with short coded names
         # (%07d + /1,/2 mate tag) -> interleave mates.
-        {params.seqtk} sample -s{params.seed} {output.qc1} $N | {params.seqtk} trimfq -L {params.readlen} - \
+        {params.seqtk} sample -s{params.seed} {output.qc1} $N \
           | {params.seqtk} seq -A - | awk '/^>/{{printf ">%07d/1\n",++n; next}}1' > $S.1.fa
-        {params.seqtk} sample -s{params.seed} {output.qc2} $N | {params.seqtk} trimfq -L {params.readlen} - \
+        {params.seqtk} sample -s{params.seed} {output.qc2} $N \
           | {params.seqtk} seq -A - | awk '/^>/{{printf ">%07d/2\n",++n; next}}1' > $S.2.fa
         {params.seqtk} mergepe $S.1.fa $S.2.fa > {output.interleaved}
         echo "[$S] interleaved $(grep -c '^>' {output.interleaved}) reads ($(grep -c '^>' $S.1.fa) pairs)"
 
         rm -f $S.1.fa $S.2.fa   # drop per-mate scratch; keep qc_*/interleaved/reports
         """
-
 
 rule REPEATEXPLORER:
     """Round 1 clustering: RepeatExplorer2 (TAREAN) on the interleaved reads."""
@@ -100,7 +100,7 @@ rule REPEATEXPLORER:
     resources:
         cpus_per_task  = 20,
         mem_mb_per_cpu = 3200,
-        runtime        = 7200,
+        runtime        = 4000,
     shell:
         r"""
         exec &> {log}
@@ -265,47 +265,15 @@ rule FASTQC_RAW:
     log:
         os.path.join(LOG_DIR, "RepeatExplorer", "QC", "fastqc_{species}.log")
     resources:
-        cpus_per_task  = 2,
+        cpus_per_task  = 4,
         mem_mb_per_cpu = 2000,
-        runtime        = 120,
+        runtime        = 400,
     envmodules:
-        "FastQC/0.12.1-Java-11",     # adjust to the FastQC module on your cluster
+        "FastQC/0.12.1-Java-11",     
     shell:
         r"""
         exec &> {log}
-        set -euo pipefail
         mkdir -p {params.outdir}
         fastqc -t {resources.cpus_per_task} -o {params.outdir} {input.r1} {input.r2}
         touch {output.done}
-        """
-
-
-rule FASTP_OVERLAP:
-    """fastp overlap analysis on the QC'd reads from SHORT_READ_PREP, report only:
-    no -o/-O so no reads are written and nothing is merged. Reports overlapping
-    pairs, insert size and overlap-based adapter detection (-2) in the JSON/HTML."""
-    input:
-        qc1 = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "{species}.qc_1.fq.gz"),
-        qc2 = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "{species}.qc_2.fq.gz"),
-    output:
-        json = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "{species}.overlap.json"),
-        html = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "{species}.overlap.html"),
-    log:
-        os.path.join(LOG_DIR, "RepeatExplorer", "QC", "fastp_overlap_{species}.log")
-    resources:
-        cpus_per_task  = 8,
-        mem_mb_per_cpu = 2000,
-        runtime        = 120,
-    envmodules:
-        "fastp/1.0.1-GCC-13.3.0",
-    shell:
-        r"""
-        exec &> {log}
-        set -euo pipefail
-        # No -o/-O => fastp writes no reads (inputs untouched); PE overlap analysis
-        # is automatic; -2 adds overlap-based adapter detection to the report.
-        fastp -i {input.qc1} -I {input.qc2} \
-          --detect_adapter_for_pe \
-          --thread {resources.cpus_per_task} \
-          -j {output.json} -h {output.html}
         """
