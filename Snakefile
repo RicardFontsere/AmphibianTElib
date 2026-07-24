@@ -6,7 +6,6 @@ GENOMES_DIR = config["GENOMES_DIR"]
 GENOMES_DIR_DONE = config["GENOMES_DIR_DONE"]
 GENOMES_SOURCE_DIR = config["GENOMES_SOURCE_DIR"]
 LOG_DIR = config["LOG_DIR"]
-CURATEDLIB = config["CURATEDLIB"]
 
 # --- RepeatExplorer2 short-read branch ---
 READS_DIR = config["READS_DIR"]
@@ -45,9 +44,11 @@ def first_read_len(fq_gz):
         return len(fh.readline().strip())   # sequence
 
 
-# Species eligible for RepeatExplorer2: a genome dir, a PE read pair, and reads at
-# least RE_READLEN long. Short-read species are excluded with a message (not an
-# error) so the rest of the pipeline is unaffected.
+# Species eligible for RepeatExplorer2: 
+    # A genome dir
+    # PE read pair
+    # Reads with at least RE_READLEN long. 
+
 SPECIES_WITH_READS = []
 for _s in SPECIES:
     _rp = find_reads(_s)
@@ -59,20 +60,19 @@ for _s in SPECIES:
         continue
     SPECIES_WITH_READS.append(_s)
 
-#include: "rules/rename_headers.smk"
-#include: "rules/EDTA_HELITRON.smk"
-include: "rules/RM_DATABASE.smk"
-include: "rules/RM2.smk"
+include: "rules/1_RENAME_HEADERS.smk"
+include: "rules/2_BUILD_RM_DATABASE.smk"
+include: "rules/3_RUN_RM2.smk"
 include: "rules/RECLASSIFY_RM.smk"
 include: "rules/RENAME_RM.smk"
 include: "rules/TETRIMMER.smk"
 include: "rules/REPEATEXPLORER.smk"
 rule all:
     input:
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}.builddb.done"), species=SPECIES),
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}.repeatmodeler.done"), species=SPECIES),
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0.fasta"), species=SPECIES),
-        #expand(os.path.join(GENOMES_DIR_DONE, "{species}", "{species}_helitron.denovo"), species=SPECIES),
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done"), species=SPECIES),
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "{species}.repeatexplorer.done"), species=SPECIES_WITH_READS),
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "{species}.fastqc.done"), species=SPECIES_WITH_READS)
+        expand(os.path.join(GENOMES_DIR, "{species}", "{species}_headers.fna"),                                 species=SPECIES),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}.builddb.done"),                   species=SPECIES),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}.repeatmodeler.done"),             species=SPECIES),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0.fasta"),                    species=SPECIES),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done"),            species=SPECIES),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "{species}.repeatexplorer.done"),  species=SPECIES_WITH_READS),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "{species}.fastqc.done"),    species=SPECIES_WITH_READS)

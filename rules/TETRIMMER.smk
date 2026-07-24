@@ -1,5 +1,5 @@
 rule TETRIMMER:
-    """Run TEtrimmer to clean and classify the RepeatModeler raw library against the genome."""
+    """Run TEtrimmer on raw library against the genome."""
     input:
         genome  = os.path.join(GENOMES_DIR_DONE, "{species}", "{species}_headers.fna"),
         library = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0.fasta"),

@@ -1,11 +1,5 @@
 rule RECLASSIFY_RM:
-    """Re-run RepeatClassifier on a completed RepeatModeler library using a complete
-    RepeatMasker/Dfam library. The original de-novo run classified against an
-    incomplete RepeatMasker.lib (missing Dfam partitions), leaving many families
-    Unknown/misclassified. This linearises the raw families FASTA and reclassifies
-    it in place -- it does NOT re-run de-novo discovery. Operates on the completed
-    runs staged under GENOMES_DIR_DONE, feeding the reclassified library into
-    RENAME_RM_LIB."""
+    """Re-run RepeatClassifier (temporary fix as previour RepeatMasker lacked libraries)"""
     input:
         families = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}-families.fa"),
         stk      = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}-families.stk")
@@ -13,7 +7,6 @@ rule RECLASSIFY_RM:
         reclassified = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}-families.reclassified.fa")
     params:
         workdir = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "reclassify"),
-        libdir  = config.get("RM_LIBDIR", "")   # optional: complete RepeatMasker Libraries dir
     log:
         os.path.join(LOG_DIR, "Reclassify", "reclassify_{species}.log")
     resources:
@@ -27,12 +20,7 @@ rule RECLASSIFY_RM:
     shell:
         """
         mkdir -p {params.workdir} $(dirname {log})
-
-        # Optional: point RepeatClassifier at a complete RepeatMasker/Dfam library.
-        # If RM_LIBDIR is empty, the loaded module's default library is used.
-        if [ -n "{params.libdir}" ]; then export LIBDIR="{params.libdir}"; fi
-
-        # 1. Linearise the RepeatModeler library to single-line FASTA
+        #RepeatModeler library to single-line FASTA
         awk '/^>/ {{printf("\\n%s\\n",$0);next;}} {{printf("%s",$0);}} END {{printf("\\n");}}' \
             < {input.families} \
             | awk 'NR > 1' > {params.workdir}/consensi.fa 2> {log}

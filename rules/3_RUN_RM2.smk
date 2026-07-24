@@ -1,5 +1,5 @@
 rule REPEATMODELER:
-    """Run RepeatModeler2 with LTR structural discovery on the prebuilt database."""
+    """Run RepeatModeler2 with LTR structural discovery"""
     input:
         db_done = os.path.join(GENOMES_DIR, "{species}", "RMDB", "{species}.builddb.done")
     output:
