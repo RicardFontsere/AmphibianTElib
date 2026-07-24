@@ -11,7 +11,7 @@ def species_prefix(wildcards):
 rule RENAME_RM_LIB:
     """Linearise the RepeatModeler library and rename its headers with a short species prefix."""
     input:
-        families = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}-families.fa")
+        families = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}-families.reclassified.fa")
     output:
         renamed = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0.fasta")
     params:

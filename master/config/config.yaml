@@ -15,3 +15,8 @@ RE_COVERAGE_R2: 0.5                               # round-2 coverage after deple
 RE_MINCL: 0.01                                    # seqclust -m: min cluster size (% of reads)
 RE_READLEN: 101                                   # fixed uniform read length (all species)
 RE_SEED: 10                                       # shared seqtk seed for both mates
+
+# --- RepeatClassifier reclassification (RECLASSIFY_RM rule) ---
+# Path to a RepeatMasker "Libraries" dir with the COMPLETE Dfam partitions.
+# Leave empty to use the loaded RepeatModeler/RepeatMasker module default.
+RM_LIBDIR: ""

@@ -63,6 +63,7 @@ for _s in SPECIES:
 #include: "rules/EDTA_HELITRON.smk"
 include: "rules/RM_DATABASE.smk"
 include: "rules/RM2.smk"
+include: "rules/RECLASSIFY_RM.smk"
 include: "rules/RENAME_RM.smk"
 include: "rules/TETRIMMER.smk"
 include: "rules/REPEATEXPLORER.smk"
