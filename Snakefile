@@ -64,7 +64,6 @@ include: "rules/1_RENAME_HEADERS.smk"
 include: "rules/2_BUILD_RM_DATABASE.smk"
 include: "rules/3_RUN_RM2.smk"
 include: "rules/RECLASSIFY_RM.smk"
-include: "rules/RENAME_RM.smk"
 include: "rules/TETRIMMER.smk"
 include: "rules/REPEATEXPLORER.smk"
 rule all:
