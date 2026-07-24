@@ -3,3 +3,6 @@ GENOMES_SOURCE_DIR: "/data/brussel/vo/000/bvo00034/vsc10945/Genomes"
 LOG_DIR: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS"
 CURATEDLIB: "/user/brussel/109/vsc10945/home/scratch/TE/Libraries/Ranidae/4.0_onlymanual/4.0onlymanual.fasta"
 PFAM_DIR: "/user/brussel/109/vsc10945/home/scratch/TE/ManualCuration/Databases"
+# Path to a RepeatMasker "Libraries" dir with the COMPLETE Dfam partitions,
+# used by the RECLASSIFY_RM rule. Leave empty to use the loaded module default.
+RM_LIBDIR: ""
