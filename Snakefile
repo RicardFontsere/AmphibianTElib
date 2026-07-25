@@ -63,9 +63,9 @@ for _s in SPECIES:
 include: "rules/1_RENAME_HEADERS.smk"
 include: "rules/2_BUILD_RM_DATABASE.smk"
 include: "rules/3_RUN_RM2.smk"
-include: "rules/RECLASSIFY_RM.smk"
-include: "rules/TETRIMMER.smk"
-include: "rules/REPEATEXPLORER.smk"
+include: "rules/4_RECLASSIFY_RENAME.smk"
+include: "rules/5_TETRIMMER.smk"
+include: "rules/6_REPEATEXPLORER.smk"
 rule all:
     input:
         expand(os.path.join(GENOMES_DIR, "{species}", "{species}_headers.fna"),                                 species=SPECIES),
