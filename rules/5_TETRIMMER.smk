@@ -13,9 +13,9 @@ rule TETRIMMER:
     log:
         os.path.join(LOG_DIR, "TEtrimmer", "tetrimmer_{species}.log")
     resources:
-        cpus_per_task  = 16,
-        mem_mb_per_cpu = 28000,
-        runtime        = 2200
+        cpus_per_task  = 20,
+        mem_mb_per_cpu = 36000,
+        runtime        = 2000
     envmodules:
         "TEtrimmer/1.7.2-foss-2025a",
     shell:
@@ -26,7 +26,14 @@ rule TETRIMMER:
             --output_dir {params.output_dir} \
             --pfam_dir {params.pfam_dir} \
             --num_threads {resources.cpus_per_task} \
-            --preset {params.preset} \
+            --cons_thr 0.8 \
+            --crop_end_div_thr 0.8 \
+            --crop_end_div_win 40 \
+            --crop_end_gap_thr 0.05 \
+            --min_blast_len 200 \
+            --max_msa_lines 150 \
+            --top_msa_lines 150 \
+            --min_seq_num 50 \
             &> {log}
         touch {output.done}
         """
