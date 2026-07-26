@@ -11,7 +11,8 @@ def species_prefix(wildcards):
 rule RECLASSIFY_RM:
     """Re-run RepeatClassifier (temporary fix as previour RepeatMasker lacked libraries),
     then rename the reclassified library headers with a short species prefix
-    (folds in the former RENAME_RM_LIB rule)."""
+    (folds in the former RENAME_RM_LIB rule). Everything runs in place inside the
+    species RMDB/ directory -- no copy-in / copy-out."""
     input:
         families = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}-families.fa"),
         stk      = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}-families.stk")
@@ -19,10 +20,9 @@ rule RECLASSIFY_RM:
         reclassified = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}-families.reclassified.fa"),
         renamed      = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0.fasta")
     params:
-        workdir = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "reclassify"),
-        prefix  = species_prefix,
-        script  = os.path.join(workflow.basedir, "scripts", "renameRMDLconsensi.pl"),
-        tmp     = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0_temp.fasta")
+        rmdb_dir = os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB"),
+        prefix   = species_prefix,
+        script   = os.path.join(workflow.basedir, "scripts", "renameRMDLconsensi.pl")
     log:
         os.path.join(LOG_DIR, "Reclassify", "reclassify_{species}.log")
     resources:
@@ -35,31 +35,27 @@ rule RECLASSIFY_RM:
         "BioPerl/1.7.8-GCCcore-14.2.0"
     shell:
         """
-        mkdir -p {params.workdir} $(dirname {log})
-        #RepeatModeler library to single-line FASTA
+        mkdir -p $(dirname {log})
+        cd {params.rmdb_dir}
+
+        # 1. Linearise the RepeatModeler library to single-line FASTA (written in place)
         awk '/^>/ {{printf("\\n%s\\n",$0);next;}} {{printf("%s",$0);}} END {{printf("\\n");}}' \
             < {input.families} \
-            | awk 'NR > 1' > {params.workdir}/consensi.fa 2> {log}
+            | awk 'NR > 1' > {output.reclassified} 2> {log}
 
-        # 2. Bring the Stockholm seed alignments alongside (IDs unchanged by linearisation)
-        cp {input.stk} {params.workdir}/families.stk
-
-        # 3. Reclassify -- RepeatClassifier writes consensi.fa.classified next to the input
-        cd {params.workdir} && \
+        # 2. Reclassify in place -- RepeatClassifier writes <consensi>.classified next to it.
+        #    Stockholm alignments are read directly from RMDB/ (IDs unchanged by linearisation).
         RepeatClassifier \
-            -consensi consensi.fa \
-            -stockholm families.stk \
+            -consensi {output.reclassified} \
+            -stockholm {input.stk} \
             -threads {resources.cpus_per_task} \
             >> {log} 2>&1
 
-        # 4. Publish the reclassified single-line library
-        cp {params.workdir}/consensi.fa.classified {output.reclassified}
+        # 3. RepeatClassifier appended .classified -> keep it as the reclassified library
+        mv {output.reclassified}.classified {output.reclassified}
 
-        # 5. Rename headers with the short species prefix 
-        awk '/^>/ {{printf("\\n%s\\n",$0);next;}} {{printf("%s",$0);}} END {{printf("\\n");}}' \
-            < {output.reclassified} \
-            | awk 'NR > 1' > {params.tmp} 2>> {log}
-        perl {params.script} {params.tmp} {params.prefix} {output.renamed} 2>> {log}
-        rm -f {params.tmp}
-        echo "Finished renaming RepeatModeler library for {wildcards.species} " >> {log}
+        # 4. Rename headers with the short species prefix (formerly RENAME_RM_LIB).
+        #    The reclassified library is already single-line, so no re-linearisation needed.
+        perl {params.script} {output.reclassified} {params.prefix} {output.renamed} 2>> {log}
+        echo "Finished reclassifying + renaming RepeatModeler library for {wildcards.species} " >> {log}
         """
