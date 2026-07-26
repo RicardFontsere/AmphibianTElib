@@ -250,30 +250,3 @@ rule REPEATEXPLORER_R2:
         """
 
 
-# ===========================================================================
-# Raw-read QC (reporting only; reads are never modified)
-# ===========================================================================
-
-rule FASTQC_RAW:
-    """FastQC report on the raw reads."""
-    input:
-        unpack(repeatexplorer_reads),
-    output:
-        done = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "{species}.fastqc.done"),
-    params:
-        outdir = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "fastqc"),
-    log:
-        os.path.join(LOG_DIR, "RepeatExplorer", "QC", "fastqc_{species}.log")
-    resources:
-        cpus_per_task  = 4,
-        mem_mb_per_cpu = 2000,
-        runtime        = 400,
-    envmodules:
-        "FastQC/0.12.1-Java-11",     
-    shell:
-        r"""
-        exec &> {log}
-        mkdir -p {params.outdir}
-        fastqc -t {resources.cpus_per_task} -o {params.outdir} {input.r1} {input.r2}
-        touch {output.done}
-        """
