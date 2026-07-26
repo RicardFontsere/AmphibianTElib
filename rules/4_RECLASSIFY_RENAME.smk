@@ -26,9 +26,9 @@ rule RECLASSIFY_RM:
     log:
         os.path.join(LOG_DIR, "Reclassify", "reclassify_{species}.log")
     resources:
-        cpus_per_task  = 16,
-        mem_mb_per_cpu = 4000,
-        runtime        = 2880
+        cpus_per_task  = 8,
+        mem_mb_per_cpu = 1000,
+        runtime        = 1000
     envmodules:
         "RepeatModeler/2.0.8-foss-2025a",
         "Perl-bundle-CPAN/5.40.0-GCCcore-14.2.0",
@@ -55,7 +55,7 @@ rule RECLASSIFY_RM:
         # 4. Publish the reclassified single-line library
         cp {params.workdir}/consensi.fa.classified {output.reclassified}
 
-        # 5. Rename headers with the short species prefix (formerly RENAME_RM_LIB)
+        # 5. Rename headers with the short species prefix 
         awk '/^>/ {{printf("\\n%s\\n",$0);next;}} {{printf("%s",$0);}} END {{printf("\\n");}}' \
             < {output.reclassified} \
             | awk 'NR > 1' > {params.tmp} 2>> {log}
