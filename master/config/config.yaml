@@ -14,4 +14,22 @@ RE_COVERAGE_R2: 0.5                               # round-2 coverage after deple
 RE_MINCL: 0.01                                    # seqclust -m: min cluster size (% of reads)
 RE_READLEN: 101                                   # fixed uniform read length (all species)
 RE_SEED: 10                                       # shared seqtk seed for both mates
+RE_MAX_READS: 2000000                             # hard cap on read PAIRS per round; large
+                                                  # amphibian genomes reach tens of millions
+                                                  # of pairs at 0.25x, which seqclust's
+                                                  # all-to-all comparison cannot finish
+
+# --- Satellitome (TAREAN consensus -> named satDNA library) ---
+REPEATMASKER_MODULE: "RepeatMasker/4.1.9-foss-2025a"   # must match `module avail RepeatMasker`
+SAT_TAREAN_RANKS: "1,2"                           # keep high + low confidence satellites
+                                                  # (rank 3 = putative LTR, 4 = other)
+SAT_MIN_MULTIMER_LEN: 200                         # multimerise monomers to >= this length
+SAT_RM_CUTOFF: 200                                # RepeatMasker -cutoff for the all-vs-all step
+SAT_VARIANT_ID: 95.0                              # >= same variant   -> collapse to 1 consensus
+SAT_FAMILY_ID: 80.0                               # >= variants of the same family
+SAT_SUPERFAMILY_ID: 50.0                          # >= same superfamily (0 = any homology)
+SAT_MIN_COV: 0.5                                  # min fraction of the shorter monomer aligned
+SAT_QUANT_READS: 5000000                          # reads per replicate for abundance (2 reps)
+SAT_MIN_ABUNDANCE: 0.0                            # drop library entries below this genome %
+SAT_LIB_VERSION: "1.0"
 

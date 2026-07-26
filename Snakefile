@@ -17,6 +17,20 @@ RE_COVERAGE_R2 = config["RE_COVERAGE_R2"]
 RE_MINCL = config["RE_MINCL"]
 RE_READLEN = config["RE_READLEN"]
 RE_SEED = config["RE_SEED"]
+RE_MAX_READS = config["RE_MAX_READS"]
+
+# --- Satellitome branch (TAREAN consensus -> named satDNA library) ---
+REPEATMASKER_MODULE = config["REPEATMASKER_MODULE"]
+SAT_TAREAN_RANKS = config["SAT_TAREAN_RANKS"]
+SAT_MIN_MULTIMER_LEN = config["SAT_MIN_MULTIMER_LEN"]
+SAT_RM_CUTOFF = config["SAT_RM_CUTOFF"]
+SAT_VARIANT_ID = config["SAT_VARIANT_ID"]
+SAT_FAMILY_ID = config["SAT_FAMILY_ID"]
+SAT_SUPERFAMILY_ID = config["SAT_SUPERFAMILY_ID"]
+SAT_MIN_COV = config["SAT_MIN_COV"]
+SAT_QUANT_READS = config["SAT_QUANT_READS"]
+SAT_MIN_ABUNDANCE = config["SAT_MIN_ABUNDANCE"]
+SAT_LIB_VERSION = str(config["SAT_LIB_VERSION"])
 
 SPECIES = [d for d in os.listdir(GENOMES_DIR_DONE)
             if os.path.isdir(os.path.join(GENOMES_DIR_DONE, d))]
@@ -66,6 +80,7 @@ include: "rules/3_RUN_RM2.smk"
 include: "rules/4_RECLASSIFY_RENAME.smk"
 include: "rules/5_TETRIMMER.smk"
 include: "rules/6_REPEATEXPLORER.smk"
+include: "rules/7_SATELLITOME.smk"
 rule all:
     input:
         expand(os.path.join(GENOMES_DIR, "{species}", "{species}_headers.fna"),                                 species=SPECIES),
@@ -74,4 +89,8 @@ rule all:
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0.fasta"),                    species=SPECIES),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done"),            species=SPECIES),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "{species}.repeatexplorer.done"),  species=SPECIES_WITH_READS),
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "{species}.fastqc.done"),    species=SPECIES_WITH_READS)
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "qc", "{species}.fastqc.done"),    species=SPECIES_WITH_READS),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "Satellitome",
+                            "{species}_satellitome_" + SAT_LIB_VERSION + ".fasta"),                             species=SPECIES_WITH_READS),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "Satellitome",
+                            "{species}_satellitome_" + SAT_LIB_VERSION + ".tsv"),                               species=SPECIES_WITH_READS)

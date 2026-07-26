@@ -37,6 +37,7 @@ rule SHORT_READ_PREP:
         coverage = RE_COVERAGE,
         readlen  = RE_READLEN,
         seed     = RE_SEED,
+        maxreads = RE_MAX_READS,
         workdir  = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer"),
     log:
         os.path.join(LOG_DIR, "RepeatExplorer", "Prep", "prep_{species}.log")
@@ -61,6 +62,15 @@ rule SHORT_READ_PREP:
         N=$(awk -v c={params.coverage} -v l={params.readlen} -v g="$GENOME" 'BEGIN{{printf "%d",(c*g)/(2*l)}}')
         IN=$(zcat {input.r1} | awk 'END{{print NR/4}}')
         echo "[$S] genome $GENOME bp | target {params.coverage}x = $N pairs | input $IN pairs"
+
+        # seqclust does an all-to-all read comparison, so the read count -- not the
+        # coverage -- is what decides whether it finishes. Cap it for large genomes.
+        if [ "$N" -gt {params.maxreads} ]; then
+            EFF=$(awk -v n={params.maxreads} -v l={params.readlen} -v g="$GENOME" \
+                  'BEGIN{{printf "%.4f",(2*n*l)/g}}')
+            echo "[$S] capping $N -> {params.maxreads} pairs (effective coverage ${{EFF}}x)"
+            N={params.maxreads}
+        fi
 
         # Quality FILTER + uniform length, adapter trimming
         fastp -i {input.r1} -I {input.r2} -o {output.qc1} -O {output.qc2} \
@@ -162,6 +172,7 @@ rule DEPLETE_READS:
         readlen   = RE_READLEN,
         seed      = RE_SEED,
         coverage2 = RE_COVERAGE_R2,
+        maxreads  = RE_MAX_READS,
         workdir   = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer"),
     log:
         os.path.join(LOG_DIR, "RepeatExplorer", "Run2", "deplete_{species}.log")
@@ -200,6 +211,14 @@ rule DEPLETE_READS:
           | samtools fastq -1 clean_1.fq -2 clean_2.fq -0 /dev/null -s /dev/null -n
         KEPT=$(( $(wc -l < clean_1.fq) / 4 ))
         echo "[$S] depletion: $SAMPLED sampled -> $KEPT kept (removed $((SAMPLED-KEPT)) matching known repeats)"
+
+        # Same all-to-all limit as round 1, applied after depletion.
+        if [ "$KEPT" -gt {params.maxreads} ]; then
+            echo "[$S] capping depleted set $KEPT -> {params.maxreads} pairs"
+            {params.seqtk} sample -s{params.seed} clean_1.fq {params.maxreads} > capped_1.fq
+            {params.seqtk} sample -s{params.seed} clean_2.fq {params.maxreads} > capped_2.fq
+            mv capped_1.fq clean_1.fq; mv capped_2.fq clean_2.fq
+        fi
 
         # QC already enforced length >= readlen, so trimfq drops nothing and the mates
         # stay in lockstep. Recode with short coded names as in round 1, then interleave.
