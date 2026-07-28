@@ -20,6 +20,12 @@ def repeatexplorer_reads(wildcards):
     return {"r1": r1, "r2": r2}
 
 
+# One-off per-species 5' hard-trim for the fastp prep (--trim_front1, --trim_front2).
+# Default is 33 bp on read1 only; these two species need 20 bp on both mates.
+RE_TRIM_FRONT   = {"Crinia_signifera": (20, 20), "Spea_bombifrons": (20, 20)}
+RE_TRIM_DEFAULT = (33, 0)
+
+
 rule SHORT_READ_PREP:
     """Round 1 prep: fastp QC, subsample to target coverage, hard-trim to a
     uniform length, recode with short coded names, and interleave the mates."""
@@ -37,6 +43,8 @@ rule SHORT_READ_PREP:
         coverage = RE_COVERAGE,
         readlen  = RE_READLEN,
         seed     = RE_SEED,
+        trim1    = lambda wc: RE_TRIM_FRONT.get(wc.species, RE_TRIM_DEFAULT)[0],
+        trim2    = lambda wc: RE_TRIM_FRONT.get(wc.species, RE_TRIM_DEFAULT)[1],
         workdir  = os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer"),
     log:
         os.path.join(LOG_DIR, "RepeatExplorer", "Prep", "prep_{species}.log")
@@ -65,6 +73,7 @@ rule SHORT_READ_PREP:
         # Quality FILTER + uniform length, adapter trimming
         fastp -i {input.r1} -I {input.r2} -o {output.qc1} -O {output.qc2} \
           --qualified_quality_phred 10 --unqualified_percent_limit 5 --n_base_limit 0 \
+          --trim_front1 {params.trim1} --trim_front2 {params.trim2} \
           --detect_adapter_for_pe --max_len1 {params.readlen} --max_len2 {params.readlen} \
           --length_required {params.readlen} --thread {resources.cpus_per_task} \
           -j {output.fastp_json} -h {output.fastp_html}
