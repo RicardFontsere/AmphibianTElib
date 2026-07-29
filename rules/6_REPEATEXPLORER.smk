@@ -21,9 +21,21 @@ def repeatexplorer_reads(wildcards):
 
 
 # One-off per-species 5' hard-trim for the fastp prep (--trim_front1, --trim_front2).
-# Default is 33 bp on read1 only; these two species need 20 bp on both mates.
-RE_TRIM_FRONT   = {"Crinia_signifera": (20, 20), "Spea_bombifrons": (20, 20)}
-RE_TRIM_DEFAULT = (33, 0)
+# Most species need no trim; the ones below need 31 bp off read1, and two need
+# 20 bp off both mates. Anything not listed falls through to no trim.
+RE_TRIM_FRONT = {
+    "Bombina_bombina":         (31, 0),
+    "Bufo_bufo":               (31, 0),
+    "Bufo_gargarizans":        (31, 0),
+    "Discoglossus_pictus":     (31, 0),
+    "Eleutherodactylus_coqui": (31, 0),
+    "Engystomops_pustulosus":  (31, 0),
+    "Rana_temporaria":         (31, 0),
+    "Xenopus_tropicalis":      (31, 0),
+    "Crinia_signifera":        (20, 20),
+    "Spea_bombifrons":         (20, 20),
+}
+RE_TRIM_DEFAULT = (0, 0)   # most species: no front trim
 
 
 rule SHORT_READ_PREP:
