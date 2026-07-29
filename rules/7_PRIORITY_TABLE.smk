@@ -4,12 +4,11 @@ rule PRIORITY_TABLE:
     novelty screen (against a pre-built RepBase blast db) and Pfam domains,
     merged into final_priority.table.tab. Runs in place in TEtrimmer/priority/."""
     input:
-        tetrimmer_done = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done"),
-        genome         = os.path.join(GENOMES_DIR_DONE, "{species}", "{species}_headers.fna"),
+        library = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "TEtrimmer_consensus_merged.fasta"),
+        genome  = os.path.join(GENOMES_DIR_DONE, "{species}", "{species}_headers.fna"),
     output:
         table = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "priority", "final_priority.table.tab"),
     params:
-        library = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "TEtrimmer_consensus_merged.fasta"),
         workdir = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "priority"),
         pfamdb   = config["PFAM_DIR"],
         repbase  = config["REPBASE_DB"],
@@ -33,7 +32,7 @@ rule PRIORITY_TABLE:
         mkdir -p {params.workdir} $(dirname {log})
         cd {params.workdir}
         bash {params.script} \
-            {params.library} \
+            {input.library} \
             {input.genome} \
             {params.pfamdb} \
             {params.repbase} \
