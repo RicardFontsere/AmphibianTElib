@@ -11,9 +11,10 @@ rule PRIORITY_TABLE:
     params:
         library = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "TEtrimmer_consensus_merged.fasta"),
         workdir = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "priority"),
-        pfamdb  = config["PFAM_DIR"],
-        repbase = config["REPBASE_DB"],
-        script  = os.path.join(workflow.basedir, "scripts", "priority_table.sh"),
+        pfamdb   = config["PFAM_DIR"],
+        repbase  = config["REPBASE_DB"],
+        pfamscan = config["PFAMSCAN_DIR"],
+        script   = os.path.join(workflow.basedir, "scripts", "priority_table.sh"),
     log:
         os.path.join(LOG_DIR, "PriorityTable", "priority_{species}.log")
     resources:
@@ -21,11 +22,12 @@ rule PRIORITY_TABLE:
         mem_mb_per_cpu = 4000,
         runtime        = 720
     envmodules:
-        # TODO: confirm/replace these module strings with the ones on your cluster
+        # TODO: confirm/replace these module strings with the ones on your cluster.
+        # PfamScan is NOT a module (run via PFAMSCAN_DIR + PERL5LIB); HMMER (hmmscan)
+        # must be on PATH for pfam_scan.pl -- add its module here if not already available.
         "CD-HIT/4.8.1-GCC-13.3.0",
         "BLAST+/2.16.0-gompi-2024a",
         "EMBOSS/6.6.0-foss-2024a",
-        "PfamScan/1.6-foss-2024a",
     shell:
         """
         mkdir -p {params.workdir} $(dirname {log})
@@ -36,5 +38,6 @@ rule PRIORITY_TABLE:
             {params.pfamdb} \
             {params.repbase} \
             {resources.cpus_per_task} \
+            {params.pfamscan} \
             &> {log}
         """
