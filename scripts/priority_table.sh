@@ -104,9 +104,11 @@ if [ ! -f cdhit.orf ]; then
     getorf -sequence cdhit.fa -outseq cdhit.orf -minsize 300
 fi
 
-if [ ! -f pfam.results ]; then
+if [ ! -f pfam.results ]; 
+    then
+    export PERL5LIB=/user/brussel/109/vsc10945/home/scratch/Software/PfamScan:$PERL5LIB
     echo ">>> [P6] running pfam_scan.pl, this can take some time"
-    pfam_scan.pl -fasta cdhit.orf -dir $pfamdb -cpu $threads > pfam.results
+    /user/brussel/109/vsc10945/home/scratch/Software/PfamScan/pfam_scan.pl -fasta cdhit.orf -dir $pfamdb -cpu $threads > pfam.results
 fi
 
 # domain counts

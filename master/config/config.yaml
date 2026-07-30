@@ -16,3 +16,7 @@ RE_MINCL: 0.01                                    # seqclust -m: min cluster siz
 RE_READLEN: 101                                   # fixed uniform read length (all species)
 RE_SEED: 10                                       # shared seqtk seed for both mates
 
+# --- Priority Table for Curation ---
+
+PFAM_DB: "/user/brussel/109/vsc10945/home/scratch/TE/ManualCuration/Databases"
+REPBASE_DB: "/user/brussel/109/vsc10945/home/scratch/TE/Libraries/repbase/RepBase31.07.fasta/repbase"
