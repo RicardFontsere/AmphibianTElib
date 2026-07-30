@@ -1,3 +1,12 @@
+rule priority_all:
+    """Convenience target: build ONLY the priority tables for species that already
+    have a TEtrimmer library. Run `snakemake priority_all ...` to avoid pulling the
+    rest of `rule all` (which would try to build TEtrimmer etc. for every species)."""
+    input:
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "priority", "final_priority.table.tab"),
+               species=SPECIES_WITH_TETRIMMER)
+
+
 rule PRIORITY_TABLE:
     """Post-process the TEtrimmer library into a per-family priority table:
     cd-hit-est dereplication, consensus length, genome copy-number, RepBase
