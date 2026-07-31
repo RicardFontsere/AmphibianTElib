@@ -113,13 +113,13 @@ if [ ! -f pfam.results ];
     /user/brussel/109/vsc10945/home/scratch/Software/PfamScan/pfam_scan.pl -fasta cdhit.orf -dir $pfamdb -cpu $threads > pfam.results
 fi
 
-# domain counts (family = ORF id minus getorf's _N suffix; join to col1 to stay aligned)
-awk '$6~/^PF/ {id=$1; sub(/_[0-9]+$/,"",id); k=id"\t"$7; if(!seen[k]++) c[id]++}
+# domain counts: every Pfam hit (no dedup); family = ORF id minus getorf's _N suffix; join to col1 to stay aligned
+awk '$6~/^PF/ {id=$1; sub(/_[0-9]+$/,"",id); c[id]++}
      END {for(f in c) print f"\t"c[f]}' pfam.results | sort > pf.domains.count
 join -a1 -e 0 -o 0,2.2 col1.txt pf.domains.count | tr ' ' '\t' | cut -f2 > col4.txt
 
-# domain names, one comma-separated list per family (same _N strip; value-test avoids leading comma)
-awk '$6~/^PF/ {id=$1; sub(/_[0-9]+$/,"",id); k=id"\t"$7; if(!seen[k]++) d[id]=(d[id]==""?$7:d[id]","$7)}
+# domain names: ALL Pfam hits per family (no dedup; value-test avoids leading comma)
+awk '$6~/^PF/ {id=$1; sub(/_[0-9]+$/,"",id); d[id]=(d[id]==""?$7:d[id]","$7)}
      END {for(f in d) print f"\t"d[f]}' pfam.results | sort > pf.domains.names
 join -a1 -e "none" -o 0,2.2 col1.txt pf.domains.names | tr ' ' '\t' | cut -f2 > col6.txt
 
