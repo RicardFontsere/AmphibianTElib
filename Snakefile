@@ -60,6 +60,14 @@ for _s in SPECIES:
         continue
     SPECIES_WITH_READS.append(_s)
 
+
+# Species eligible for PRIORITY_TABLE: those whose TEtrimmer consensus library
+# already exists on disk (skip the ones still lacking it).
+SPECIES_WITH_TETRIMMER = [
+    _s for _s in SPECIES
+    if os.path.exists(os.path.join(GENOMES_DIR_DONE, _s, "TEtrimmer", "TEtrimmer_consensus_merged.fasta"))
+]
+
 include: "rules/1_RENAME_HEADERS.smk"
 include: "rules/2_BUILD_RM_DATABASE.smk"
 include: "rules/3_RUN_RM2.smk"
@@ -75,6 +83,5 @@ rule all:
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}.repeatmodeler.done"),             species=SPECIES),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0.fasta"),                    species=SPECIES),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done"),            species=SPECIES),
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "priority", "final_priority.table.tab"), species=SPECIES),
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "{species}.repeatexplorer.done"),  species=SPECIES_WITH_READS),
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "priority", "final_priority.table.tab"), species=SPECIES)
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "priority", "final_priority.table.tab"), species=SPECIES_WITH_TETRIMMER),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "{species}.repeatexplorer.done"),  species=SPECIES_WITH_READS)

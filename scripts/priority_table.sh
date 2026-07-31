@@ -2,9 +2,9 @@
 
 set -e
 
-if [ $# -ne 5 ]
+if [ $# -ne 6 ]
 then
-    echo -e "\nusage: `basename $0` <TEtrimmer_lib.fa> <genome.fa> <pfam_db_dir> <repbase_blastdb> <threads>\n"
+    echo -e "\nusage: `basename $0` <TEtrimmer_lib.fa> <genome.fa> <pfam_db_dir> <repbase_blastdb> <threads> <pfamscan_dir>\n"
     echo -e "DESCRIPTION:\tRuns a pipeline that: 1) reduces sequence redundancy from the TEtrimmer library"
     echo -e "\t\tusing cd-hit-est; 2) extracts family names; 3) calculates consensus length; 4) makes a rough"
     echo -e "\t\testimate of genome copy number; 5) screens each family against RepBase for novelty;"
@@ -15,6 +15,7 @@ then
     echo -e "\t\t<pfam_db_DIR>\t\tpath to the Pfam database directory"
     echo -e "\t\t<repbase_blastdb>\tpath to a PRE-BUILT RepBase blast nucl database (db prefix, already makeblastdb'd)"
     echo -e "\t\t<threads>\t\tnumber of CPU threads"
+    echo -e "\t\t<pfamscan_dir>\t\tPfamScan install dir (holds pfam_scan.pl; added to PERL5LIB)"
     echo -e "OUTPUT:\t\tfinal_priority.table.tab, with columns:"
     echo -e "\t\tfamily | length | copies | n_domains | repbase_hit | repbase_pident | repbase_qcov | domains\n"
     exit
@@ -25,6 +26,7 @@ genome=$2
 pfamdb=$3
 repbase=$4
 threads=$5
+pfamscan=$6
 
 
 # ---------------------------------------------------------------------------

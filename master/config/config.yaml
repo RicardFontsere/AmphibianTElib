@@ -4,6 +4,7 @@ GENOMES_SOURCE_DIR: "/data/brussel/vo/000/bvo00034/vsc10945/Genomes"
 LOG_DIR: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS"
 PFAM_DIR: "/user/brussel/109/vsc10945/home/scratch/TE/ManualCuration/Databases"
 REPBASE_DB: ""   # pre-built RepBase blast nucl db (db prefix) for the priority-table rule; set before running
+PFAMSCAN_DIR: "/user/brussel/109/vsc10945/home/scratch/Software/PfamScan"   # holds pfam_scan.pl (added to PERL5LIB)
 
 # --- RepeatExplorer2 short-read branch ---
 READS_DIR: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/Reads"                          
