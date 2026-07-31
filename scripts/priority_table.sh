@@ -113,15 +113,25 @@ if [ ! -f pfam.results ];
     /user/brussel/109/vsc10945/home/scratch/Software/PfamScan/pfam_scan.pl -fasta cdhit.orf -dir $pfamdb -cpu $threads > pfam.results
 fi
 
-# domain counts: every Pfam hit (no dedup); family = ORF id minus getorf's _N suffix; join to col1 to stay aligned
-awk '$6~/^PF/ {id=$1; sub(/_[0-9]+$/,"",id); c[id]++}
-     END {for(f in c) print f"\t"c[f]}' pfam.results | sort > pf.domains.count
-join -a1 -e 0 -o 0,2.2 col1.txt pf.domains.count | tr ' ' '\t' | cut -f2 > col4.txt
-
-# domain names: ALL Pfam hits per family (no dedup; value-test avoids leading comma)
-awk '$6~/^PF/ {id=$1; sub(/_[0-9]+$/,"",id); d[id]=(d[id]==""?$7:d[id]","$7)}
-     END {for(f in d) print f"\t"d[f]}' pfam.results | sort > pf.domains.names
-join -a1 -e "none" -o 0,2.2 col1.txt pf.domains.names | tr ' ' '\t' | cut -f2 > col6.txt
+# domain counts (col4) and names (col6), listing ALL Pfam hits per family.
+# Match on the family id BEFORE '#': getorf rewrites '/' -> '_' and appends '_N' in
+# the classification part, so the full name never matches col1 -- the pre-'#' id does.
+# Single awk reads pfam.results into per-family arrays, then emits one line per col1
+# family (in col1 order) so col4/col6 stay aligned for the P7 paste.
+awk '
+  FNR==NR {
+    if ($6 ~ /^PF/) {
+      key=$1; if (key ~ /#/) sub(/#.*/,"",key); else sub(/_[0-9]+$/,"",key);
+      cnt[key]++;
+      nm[key]=(nm[key]==""?$7:nm[key]","$7);
+    }
+    next
+  }
+  { k=$0; sub(/#.*/,"",k);
+    print (k in cnt ? cnt[k] : 0)      > "col4.txt";
+    print (k in nm  ? nm[k]  : "none") > "col6.txt";
+  }
+' pfam.results col1.txt
 
 echo ">>> [P6] DONE - Pfam searches finished"
 
