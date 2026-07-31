@@ -113,12 +113,13 @@ if [ ! -f pfam.results ];
     /user/brussel/109/vsc10945/home/scratch/Software/PfamScan/pfam_scan.pl -fasta cdhit.orf -dir $pfamdb -cpu $threads > pfam.results
 fi
 
-# domain counts
-awk '{if ($6~/^PF/) {print $1}}' < pfam.results | sed 's/_/\//2;s/_/ /2' | awk '{print $1}' | sort > pf.domains.count
-cat col1.txt pf.domains.count | sort | uniq -c | sort -k 2 | awk '{print $1-1}' > col4.txt
+# domain counts (family = ORF id minus getorf's _N suffix; join to col1 to stay aligned)
+awk '$6~/^PF/ {id=$1; sub(/_[0-9]+$/,"",id); k=id"\t"$7; if(!seen[k]++) c[id]++}
+     END {for(f in c) print f"\t"c[f]}' pfam.results | sort > pf.domains.count
+join -a1 -e 0 -o 0,2.2 col1.txt pf.domains.count | tr ' ' '\t' | cut -f2 > col4.txt
 
-# domain names, one comma-separated list per family
-awk '$6~/^PF/ {n=$1; sub(/_[0-9]+$/,"",n); k=n"\t"$7; if(!s[k]++) d[n]=(n in d ? d[n]","$7 : $7)}
+# domain names, one comma-separated list per family (same _N strip; value-test avoids leading comma)
+awk '$6~/^PF/ {id=$1; sub(/_[0-9]+$/,"",id); k=id"\t"$7; if(!seen[k]++) d[id]=(d[id]==""?$7:d[id]","$7)}
      END {for(f in d) print f"\t"d[f]}' pfam.results | sort > pf.domains.names
 join -a1 -e "none" -o 0,2.2 col1.txt pf.domains.names | tr ' ' '\t' | cut -f2 > col6.txt
 
