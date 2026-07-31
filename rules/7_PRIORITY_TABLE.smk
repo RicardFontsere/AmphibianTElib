@@ -26,9 +26,9 @@ rule PRIORITY_TABLE:
     log:
         os.path.join(LOG_DIR, "PriorityTable", "priority_{species}.log")
     resources:
-        cpus_per_task  = 8,
-        mem_mb_per_cpu = 8000,
-        runtime        = 220
+        cpus_per_task  = 2,
+        mem_mb_per_cpu = 1000,
+        runtime        = 20
     envmodules:
         "CD-HIT/4.8.1-GCC-13.3.0",
         "BLAST+/2.16.0-gompi-2024a",
