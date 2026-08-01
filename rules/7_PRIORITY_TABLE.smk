@@ -22,6 +22,7 @@ rule PRIORITY_TABLE:
         pfamdb   = config["PFAM_DIR"],
         repbase  = config["REPBASE_DB"],
         pfamscan = config["PFAMSCAN_DIR"],
+        satlib   = config["SAT_LIB"],
         script   = os.path.join(workflow.basedir, "scripts", "priority_table.sh"),
     log:
         os.path.join(LOG_DIR, "PriorityTable", "priority_{species}.log")
@@ -46,5 +47,6 @@ rule PRIORITY_TABLE:
             {params.repbase} \
             {resources.cpus_per_task} \
             {params.pfamscan} \
+            {params.satlib} \
             &> {log}
         """
