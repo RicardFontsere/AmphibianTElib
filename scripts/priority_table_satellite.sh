@@ -2,9 +2,9 @@
 
 set -e
 
-if [ $# -ne 6 ]
+if [ $# -ne 7 ]
 then
-    echo -e "\nusage: `basename $0` <TEtrimmer_lib.fa> <genome.fa> <pfam_db_dir> <repbase_blastdb> <threads> <pfamscan_dir>\n"
+    echo -e "\nusage: `basename $0` <TEtrimmer_lib.fa> <genome.fa> <pfam_db_dir> <repbase_blastdb> <threads> <pfamscan_dir> <satellite_lib.fa>\n"
     echo -e "DESCRIPTION:\tRuns a pipeline that: 1) reduces sequence redundancy from the TEtrimmer library"
     echo -e "\t\tusing cd-hit-est; 2) extracts family names; 3) calculates consensus length; 4) makes a rough"
     echo -e "\t\testimate of genome copy number; 5) screens each family against RepBase for novelty;"
@@ -16,8 +16,9 @@ then
     echo -e "\t\t<repbase_blastdb>\tpath to a PRE-BUILT RepBase blast nucl database (db prefix, already makeblastdb'd)"
     echo -e "\t\t<threads>\t\tnumber of CPU threads"
     echo -e "\t\t<pfamscan_dir>\t\tPfamScan install dir (holds pfam_scan.pl; added to PERL5LIB)"
+    echo -e "\t\t<satellite_lib.fa>\tsatellite consensus library FASTA (screened to flag satellite-only TEs)"
     echo -e "OUTPUT:\t\tfinal_priority.table.tab, with columns:"
-    echo -e "\t\tfamily | length | copies | n_domains | repbase_hit | repbase_pident | repbase_qcov | repbase_alnlen | repbase_scov | repbase_bitscore | domains\n"
+    echo -e "\t\tfamily | length | copies | n_domains | repbase_hit | repbase_pident | repbase_qcov | repbase_alnlen | repbase_scov | repbase_bitscore | domains | sat_hit | sat_qcov\n"
     exit
 fi
 
@@ -27,6 +28,7 @@ pfamdb=$3
 repbase=$4
 threads=$5
 pfamscan=$6
+satlib=$7
 
 
 # ---------------------------------------------------------------------------
@@ -148,11 +150,38 @@ echo ">>> [P6] DONE - Pfam searches finished"
 
 
 # ---------------------------------------------------------------------------
+# P6b  satellite screen  ->  col7.txt (sat_hit), col8.txt (sat_qcov)
+#      Consensus = query, satellite lib = subject; blastn local + all HSPs, so a
+#      consensus that is a tandem array of a monomer gets qcovs ~100%. -dust no
+#      keeps low-complexity satellites from being masked away. High sat_qcov means
+#      "this TE is (mostly) just a satellite".
+# ---------------------------------------------------------------------------
+
+if [ ! -f sat_db.nin ]; then
+    echo ">>> [P6b] building blast db for the satellite library"
+    makeblastdb -in $satlib -dbtype nucl -out sat_db
+fi
+
+if [ ! -f sat.blast ]; then
+    echo ">>> [P6b] blasting library against satellites (dust off)"
+    blastn -task blastn -dust no -query cdhit.fa -db sat_db -num_threads $threads \
+        -outfmt "6 qseqid sseqid pident qcovs bitscore" -evalue 1e-5 > sat.blast
+fi
+
+# best satellite hit per family (highest bitscore) -> name + qcovs; join to col1 to stay aligned
+sort -k1,1 -k5,5gr sat.blast | awk '!s[$1]++ {print $1"\t"$2"\t"$4}' | sort > sat.best
+join -a1 -e "-" -o 0,2.2 col1.txt sat.best | tr ' ' '\t' | cut -f2 > col7.txt
+join -a1 -e "-" -o 0,2.3 col1.txt sat.best | tr ' ' '\t' | cut -f2 > col8.txt
+
+echo ">>> [P6b] DONE - `awk '$1!="-"' col7.txt | wc -l` families hit a satellite"
+
+
+# ---------------------------------------------------------------------------
 # P7  merge
 # ---------------------------------------------------------------------------
 
-echo -e "family\tlength\tcopies\tn_domains\trepbase_hit\trepbase_pident\trepbase_qcov\trepbase_alnlen\trepbase_scov\trepbase_bitscore\tdomains" > final_priority.table.tab
-paste -d "\t" col1.txt col2.txt col3.txt col4.txt col5.txt col6.txt >> final_priority.table.tab
+echo -e "family\tlength\tcopies\tn_domains\trepbase_hit\trepbase_pident\trepbase_qcov\trepbase_alnlen\trepbase_scov\trepbase_bitscore\tdomains\tsat_hit\tsat_qcov" > final_priority.table.tab
+paste -d "\t" col1.txt col2.txt col3.txt col4.txt col5.txt col6.txt col7.txt col8.txt >> final_priority.table.tab
 
 echo ">>> [P7] DONE - final_priority.table.tab generated"
 echo
