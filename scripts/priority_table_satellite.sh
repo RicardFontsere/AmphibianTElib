@@ -92,7 +92,7 @@ echo ">>> [P4] DONE - copy numbers estimated"
 # evidence, so below this the family stays no-hit and goes to the novelty pool.
 REPBASE_MINLEN=100
 
-if [ ! -f repbase.blast ]; then
+if [ ! -f repbase.blast ] || [ "$(awk 'NR==1{print NF; exit}' repbase.blast)" != "7" ]; then
     echo ">>> [P5] blasting library against pre-built RepBase db (dc-megablast, dust on)"
     blastn -task dc-megablast -query cdhit.fa -db $repbase -num_threads $threads -dust yes \
         -outfmt "6 qseqid sseqid pident length qcovs slen bitscore" -evalue 1e-5 > repbase.blast
