@@ -105,9 +105,9 @@ awk -v m="$REPBASE_MINLEN" '$4>=m' repbase.blast \
   | sort -k1,1 -k7,7gr \
   | awk '!s[$1]++ {scov=($6>0?100*$4/$6:0); printf "%s\t%s\t%s\t%s\t%s\t%.1f\t%s\n",$1,$2,$3,$5,$4,scov,$7}' \
   | sort > repbase.best
-join -a1 -e "-" -o 0,2.2,2.3,2.4,2.5,2.6,2.7 col1.txt repbase.best | tr ' ' '\t' | cut -f2-7 > col5.txt
+join -a1 -e "0" -o 0,2.2,2.3,2.4,2.5,2.6,2.7 col1.txt repbase.best | tr ' ' '\t' | cut -f2-7 > col5.txt
 
-echo ">>> [P5] DONE - `awk '$1!="-"' col5.txt | wc -l` families have a RepBase hit (>= ${REPBASE_MINLEN} bp)"
+echo ">>> [P5] DONE - `awk '$1!="0"' col5.txt | wc -l` families have a RepBase hit (>= ${REPBASE_MINLEN} bp)"
 
 
 # ---------------------------------------------------------------------------
@@ -170,10 +170,10 @@ fi
 
 # best satellite hit per family (highest bitscore) -> name + qcovs; join to col1 to stay aligned
 sort -k1,1 -k5,5gr sat.blast | awk '!s[$1]++ {print $1"\t"$2"\t"$4}' | sort > sat.best
-join -a1 -e "-" -o 0,2.2 col1.txt sat.best | tr ' ' '\t' | cut -f2 > col7.txt
-join -a1 -e "-" -o 0,2.3 col1.txt sat.best | tr ' ' '\t' | cut -f2 > col8.txt
+join -a1 -e "0" -o 0,2.2 col1.txt sat.best | tr ' ' '\t' | cut -f2 > col7.txt
+join -a1 -e "0" -o 0,2.3 col1.txt sat.best | tr ' ' '\t' | cut -f2 > col8.txt
 
-echo ">>> [P6b] DONE - `awk '$1!="-"' col7.txt | wc -l` families hit a satellite"
+echo ">>> [P6b] DONE - `awk '$1!="0"' col7.txt | wc -l` families hit a satellite"
 
 
 # ---------------------------------------------------------------------------
@@ -186,4 +186,4 @@ paste -d "\t" col1.txt col2.txt col3.txt col4.txt col5.txt col6.txt col7.txt col
 echo ">>> [P7] DONE - final_priority.table.tab generated"
 echo
 echo "To list candidate families with no close RepBase match, ranked by copy number:"
-echo "  awk -F'\t' 'NR>1 && (\$6==\"-\" || \$6<70 || \$7<50)' final_priority.table.tab | sort -k3,3nr | less -S"
+echo "  awk -F'\t' 'NR>1 && (\$6==0 || \$6<70 || \$7<50)' final_priority.table.tab | sort -k3,3nr | less -S"
