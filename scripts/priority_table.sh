@@ -125,20 +125,27 @@ if [ ! -f cdd.proc ]; then
     "$cdddir/rpsbproc/rpsbproc" -i cdd.asn -o cdd.proc -d "$cdddir/rpsbproc/data" -m rep -e 0.01
 fi
 
+# Resolve Query_N -> real name, DROP Non-specific hits, emit  fam<TAB>from<TAB>domain;
+# sort by family then genomic position so domains list N->C -- their order along the
+# consensus is informative for classification (e.g. PR-RT-RH-IN in retroelements).
 awk -F'\t' '
-  FNR==NR {
-    if      ($1=="QUERY")      qname[$2]=$5;
-    else if ($1=="DOMAINS")    indom=1;
-    else if ($1=="ENDDOMAINS") indom=0;
-    else if (indom) { q=$2; sub(/\[.*/,"",q); fam=qname[q]; sub(/#.*/,"",fam);
-                      cnt[fam]++; nm[fam]=(nm[fam]==""?$10:nm[fam]","$10) }
-    next
+  $1=="QUERY"      { qname[$2]=$5; next }
+  $1=="DOMAINS"    { indom=1; next }
+  $1=="ENDDOMAINS" { indom=0; next }
+  indom && $3!="Non-specific" {
+    q=$2; sub(/\[.*/,"",q); fam=qname[q]; sub(/#.*/,"",fam);
+    print fam"\t"$5"\t"$10
   }
+' cdd.proc | sort -t$'\t' -k1,1 -k2,2n > cdd.domlist
+
+# Aggregate per family in that positional order, one line per col1 family (aligned).
+awk -F'\t' '
+  NR==FNR { cnt[$1]++; nm[$1]=(nm[$1]==""?$3:nm[$1]","$3); next }
   { k=$0; sub(/#.*/,"",k);
     print (k in cnt ? cnt[k] : 0)      > "col4.txt";
     print (k in nm  ? nm[k]  : "none") > "col6.txt";
   }
-' cdd.proc col1.txt
+' cdd.domlist col1.txt
 
 echo ">>> [P6] DONE - CDD domain search finished"
 
