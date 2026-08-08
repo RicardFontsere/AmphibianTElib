@@ -24,16 +24,17 @@ def repeatexplorer_reads(wildcards):
 # Most species need no trim; the ones below need 31 bp off read1, and two need
 # 20 bp off both mates. Anything not listed falls through to no trim.
 RE_TRIM_FRONT = {
-    "Bombina_bombina":         (31, 0),
-    "Bufo_bufo":               (31, 0),
-    "Bufo_gargarizans":        (31, 0),
-    "Discoglossus_pictus":     (31, 0),
-    "Eleutherodactylus_coqui": (31, 0),
-    "Engystomops_pustulosus":  (31, 0),
-    "Rana_temporaria":         (31, 0),
-    "Xenopus_tropicalis":      (31, 0),
+    "Bombina_bombina":         (30, 0),
+    "Bufo_bufo":               (30, 0),
+    "Bufo_gargarizans":        (30, 0),
+    "Discoglossus_pictus":     (30, 0),
+    "Eleutherodactylus_coqui": (30, 0),
+    "Engystomops_pustulosus":  (30, 0),
+    "Rana_temporaria":         (30, 0),
+    "Xenopus_tropicalis":      (30, 0),
     "Crinia_signifera":        (20, 20),
     "Spea_bombifrons":         (20, 20),
+    "Spea_multiplicata":       (20, 20),
 }
 RE_TRIM_DEFAULT = (0, 0)   # most species: no front trim
 
