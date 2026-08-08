@@ -20,4 +20,5 @@ RE_SEED: 10                                       # shared seqtk seed for both m
 # --- Priority Table for Curation ---
 
 REPBASE_DB: "/user/brussel/109/vsc10945/home/scratch/TE/Libraries/repbase/RepBase31.07.fasta/repbase"
+CDD_DIR: ""      # CDD base dir for the priority-table domain search; must hold Cdd* db, rpsbproc/rpsbproc and rpsbproc/data. Set before running
 SAT_LIB: ""   # satellite consensus library FASTA for the priority-table satellite screen; set before running

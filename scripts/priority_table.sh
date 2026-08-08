@@ -2,20 +2,19 @@
 
 set -e
 
-if [ $# -ne 6 ]
+if [ $# -ne 5 ]
 then
-    echo -e "\nusage: `basename $0` <TEtrimmer_lib.fa> <genome.fa> <pfam_db_dir> <repbase_blastdb> <threads> <pfamscan_dir>\n"
+    echo -e "\nusage: `basename $0` <TEtrimmer_lib.fa> <genome.fa> <cdd_dir> <repbase_blastdb> <threads>\n"
     echo -e "DESCRIPTION:\tRuns a pipeline that: 1) reduces sequence redundancy from the TEtrimmer library"
     echo -e "\t\tusing cd-hit-est; 2) extracts family names; 3) calculates consensus length; 4) makes a rough"
     echo -e "\t\testimate of genome copy number; 5) screens each family against RepBase for novelty;"
-    echo -e "\t\t6) predicts ORFs and identifies Pfam domains; 7) merges into final_priority.table.tab.\n"
-    echo -e "REQUIRES:\tcd-hit, blast, EMBOSS (getorf), pfam_scan.pl and the Pfam database.\n"
+    echo -e "\t\t6) searches conserved domains against CDD; 7) merges into final_priority.table.tab.\n"
+    echo -e "REQUIRES:\tcd-hit, blast (incl. rpstblastn) and rpsbproc + a CDD rpsblast database.\n"
     echo -e "INPUT:\t\t<TEtrimmer_lib.fa>\tTEtrimmer consensus library (e.g. TEtrimmer_consensus_merged.fasta)"
     echo -e "\t\t<genome.fa>\t\tgenome used to predict the library"
-    echo -e "\t\t<pfam_db_DIR>\t\tpath to the Pfam database directory"
+    echo -e "\t\t<cdd_dir>\t\tCDD base dir: holds Cdd* db, rpsbproc/rpsbproc and rpsbproc/data"
     echo -e "\t\t<repbase_blastdb>\tpath to a PRE-BUILT RepBase blast nucl database (db prefix, already makeblastdb'd)"
     echo -e "\t\t<threads>\t\tnumber of CPU threads"
-    echo -e "\t\t<pfamscan_dir>\t\tPfamScan install dir (holds pfam_scan.pl; added to PERL5LIB)"
     echo -e "OUTPUT:\t\tfinal_priority.table.tab, with columns:"
     echo -e "\t\tfamily | length | copies | n_domains | repbase_hit | repbase_pident | repbase_qcov | repbase_alnlen | repbase_scov | repbase_bitscore | domains\n"
     exit
@@ -23,10 +22,9 @@ fi
 
 rmout=$1
 genome=$2
-pfamdb=$3
+cdddir=$3
 repbase=$4
 threads=$5
-pfamscan=$6
 
 
 # ---------------------------------------------------------------------------
@@ -109,42 +107,40 @@ echo ">>> [P5] DONE - `awk '$1!="0"' col5.txt | wc -l` families have a RepBase h
 
 
 # ---------------------------------------------------------------------------
-# P6  ORF prediction and Pfam domains  ->  col4.txt (counts), col6.txt (names)
+# P6  Conserved-domain search via CDD  ->  col4.txt (n_domains), col6.txt (domains)
 # ---------------------------------------------------------------------------
+# rpstblastn 6-frame-translates the nucleotide consensus and searches CDD PSSMs
+# (Pfam + SMART + COG + PRK + TIGRFAM + curated CD) -- no ORF step, so degraded /
+# frameshifted domains still hit. rpsbproc renders the readable hit table; we map
+# its Query_N ids back to the real names, key on the family id BEFORE '#', and emit
+# one line per col1 family (in col1 order) so col4/col6 stay aligned for the paste.
 
-if [ ! -f cdhit.orf ]; then
-    echo ">>> [P6] predicting ORFs"
-    getorf -sequence cdhit.fa -outseq cdhit.orf -minsize 300
+if [ ! -f cdd.asn ]; then
+    echo ">>> [P6] rpstblastn vs CDD (6-frame)"
+    rpstblastn -query cdhit.fa -db "$cdddir/Cdd" -num_threads $threads -evalue 0.01 -outfmt 11 -out cdd.asn
 fi
 
-if [ ! -f pfam.results ]; 
-    then
-    export PERL5LIB=/user/brussel/109/vsc10945/home/scratch/Software/PfamScan:$PERL5LIB
-    echo ">>> [P6] running pfam_scan.pl, this can take some time"
-    /user/brussel/109/vsc10945/home/scratch/Software/PfamScan/pfam_scan.pl -fasta cdhit.orf -dir $pfamdb -cpu $threads > pfam.results
+if [ ! -f cdd.proc ]; then
+    echo ">>> [P6] rpsbproc post-processing"
+    "$cdddir/rpsbproc/rpsbproc" -i cdd.asn -o cdd.proc -d "$cdddir/rpsbproc/data" -m rep -e 0.01
 fi
 
-# domain counts (col4) and names (col6), listing ALL Pfam hits per family.
-# Match on the family id BEFORE '#': getorf rewrites '/' -> '_' and appends '_N' in
-# the classification part, so the full name never matches col1 -- the pre-'#' id does.
-# Single awk reads pfam.results into per-family arrays, then emits one line per col1
-# family (in col1 order) so col4/col6 stay aligned for the P7 paste.
-awk '
+awk -F'\t' '
   FNR==NR {
-    if ($6 ~ /^PF/) {
-      key=$1; if (key ~ /#/) sub(/#.*/,"",key); else sub(/_[0-9]+$/,"",key);
-      cnt[key]++;
-      nm[key]=(nm[key]==""?$7:nm[key]","$7);
-    }
+    if      ($1=="QUERY")      qname[$2]=$5;
+    else if ($1=="DOMAINS")    indom=1;
+    else if ($1=="ENDDOMAINS") indom=0;
+    else if (indom) { q=$2; sub(/\[.*/,"",q); fam=qname[q]; sub(/#.*/,"",fam);
+                      cnt[fam]++; nm[fam]=(nm[fam]==""?$10:nm[fam]","$10) }
     next
   }
   { k=$0; sub(/#.*/,"",k);
     print (k in cnt ? cnt[k] : 0)      > "col4.txt";
     print (k in nm  ? nm[k]  : "none") > "col6.txt";
   }
-' pfam.results col1.txt
+' cdd.proc col1.txt
 
-echo ">>> [P6] DONE - Pfam searches finished"
+echo ">>> [P6] DONE - CDD domain search finished"
 
 
 # ---------------------------------------------------------------------------

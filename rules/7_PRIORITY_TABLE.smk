@@ -19,10 +19,9 @@ rule PRIORITY_TABLE:
         table = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "priority", "final_priority.table.tab"),
     params:
         workdir = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "priority"),
-        pfamdb   = config["PFAM_DIR"],
-        repbase  = config["REPBASE_DB"],
-        pfamscan = config["PFAMSCAN_DIR"],
-        script   = os.path.join(workflow.basedir, "scripts", "priority_table.sh"),
+        cdddir  = config["CDD_DIR"],
+        repbase = config["REPBASE_DB"],
+        script  = os.path.join(workflow.basedir, "scripts", "priority_table.sh"),
     log:
         os.path.join(LOG_DIR, "PriorityTable", "priority_{species}.log")
     resources:
@@ -32,9 +31,7 @@ rule PRIORITY_TABLE:
     envmodules:
         "CD-HIT/4.8.1-GCC-13.3.0",
         "BLAST+/2.16.0-gompi-2024a",
-        "EMBOSS/6.6.0-foss-2024a",
-        "BioPerl/1.7.8-GCCcore-13.3.0",
-        "HMMER/3.4-gompi-2024a"
+        "GCC/13.3.0"
     shell:
         """
         mkdir -p {params.workdir} $(dirname {log})
@@ -42,9 +39,8 @@ rule PRIORITY_TABLE:
         bash {params.script} \
             {input.library} \
             {input.genome} \
-            {params.pfamdb} \
+            {params.cdddir} \
             {params.repbase} \
             {resources.cpus_per_task} \
-            {params.pfamscan} \
             &> {log}
         """
