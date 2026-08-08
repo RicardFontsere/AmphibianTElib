@@ -12,7 +12,7 @@ then
     echo -e "REQUIRES:\tcd-hit, blast (incl. rpstblastn) and rpsbproc + a CDD rpsblast database.\n"
     echo -e "INPUT:\t\t<TEtrimmer_lib.fa>\tTEtrimmer consensus library (e.g. TEtrimmer_consensus_merged.fasta)"
     echo -e "\t\t<genome.fa>\t\tgenome used to predict the library"
-    echo -e "\t\t<cdd_dir>\t\tCDD base dir: holds Cdd* db, rpsbproc/rpsbproc and rpsbproc/data"
+    echo -e "\t\t<cdd_dir>\t\tCDD base dir: holds the rpsbproc binary and utils/db/Cdd + utils/data"
     echo -e "\t\t<repbase_blastdb>\tpath to a PRE-BUILT RepBase blast nucl database (db prefix, already makeblastdb'd)"
     echo -e "\t\t<threads>\t\tnumber of CPU threads"
     echo -e "OUTPUT:\t\tfinal_priority.table.tab, with columns:"
@@ -117,12 +117,12 @@ echo ">>> [P5] DONE - `awk '$1!="0"' col5.txt | wc -l` families have a RepBase h
 
 if [ ! -f cdd.asn ]; then
     echo ">>> [P6] rpstblastn vs CDD (6-frame)"
-    rpstblastn -query cdhit.fa -db "$cdddir/Cdd" -num_threads $threads -evalue 0.01 -outfmt 11 -out cdd.asn
+    rpstblastn -query cdhit.fa -db "$cdddir/utils/db/Cdd" -num_threads $threads -evalue 0.01 -outfmt 11 -out cdd.asn
 fi
 
 if [ ! -f cdd.proc ]; then
     echo ">>> [P6] rpsbproc post-processing"
-    "$cdddir/rpsbproc/rpsbproc" -i cdd.asn -o cdd.proc -d "$cdddir/rpsbproc/data" -m rep -e 0.01
+    "$cdddir/rpsbproc" -i cdd.asn -o cdd.proc -d "$cdddir/utils/data" -m rep -e 0.01
 fi
 
 # Resolve Query_N -> real name, DROP Non-specific hits, emit  fam<TAB>from<TAB>domain;
