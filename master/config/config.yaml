@@ -22,3 +22,6 @@ RE_SEED: 10                                       # shared seqtk seed for both m
 REPBASE_DB: "/user/brussel/109/vsc10945/home/scratch/TE/Libraries/repbase/RepBase31.07.fasta/repbase"
 CDD_DIR: "/user/brussel/109/vsc10945/home/scratch/Software/CDD"      # CDD base dir for the priority-table domain search; must hold Cdd* db, rpsbproc/rpsbproc and rpsbproc/data. Set before running
 SAT_LIB: ""   # satellite consensus library FASTA for the priority-table satellite screen; set before running
+
+# --- RepeatMasker + divergence landscape on the lib2.0 library ---
+DFAM_TETOOLS_SIF: "/apps/brussel/singularity/dfam-tetools/dfam-tetools-1.88.5.sif"   # provides calcDivergenceFromAlign.pl

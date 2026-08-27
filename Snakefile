@@ -6,6 +6,7 @@ GENOMES_DIR = config["GENOMES_DIR"]
 GENOMES_DIR_DONE = config["GENOMES_DIR_DONE"]
 GENOMES_SOURCE_DIR = config["GENOMES_SOURCE_DIR"]
 LOG_DIR = config["LOG_DIR"]
+DFAM_TETOOLS_SIF = config["DFAM_TETOOLS_SIF"]
 
 # --- RepeatExplorer2 short-read branch ---
 READS_DIR = config["READS_DIR"]
@@ -85,4 +86,6 @@ rule all:
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done"),            species=SPECIES),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "priority", "final_priority.table.tab"), species=SPECIES_WITH_TETRIMMER),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}_lib2.0.fa"),               species=SPECIES_WITH_TETRIMMER),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}.align.divsum"),                 species=SPECIES_WITH_TETRIMMER),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}.ATELIB.divsum.html"),           species=SPECIES_WITH_TETRIMMER),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "{species}.repeatexplorer.done"),  species=SPECIES_WITH_READS)
