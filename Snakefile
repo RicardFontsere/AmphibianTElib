@@ -84,4 +84,5 @@ rule all:
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0.fasta"),                    species=SPECIES),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done"),            species=SPECIES),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "priority", "final_priority.table.tab"), species=SPECIES_WITH_TETRIMMER),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}_lib2.0.fa"),               species=SPECIES_WITH_TETRIMMER),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "{species}.repeatexplorer.done"),  species=SPECIES_WITH_READS)
