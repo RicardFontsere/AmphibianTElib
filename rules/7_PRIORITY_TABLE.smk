@@ -7,6 +7,7 @@ rule priority_all:
                species=SPECIES_WITH_TETRIMMER)
 
 
+
 rule PRIORITY_TABLE:
     """Post-process the TEtrimmer library into a per-family priority table:
     cd-hit-est dereplication, consensus length, genome copy-number, RepBase
@@ -25,8 +26,8 @@ rule PRIORITY_TABLE:
     log:
         os.path.join(LOG_DIR, "PriorityTable", "priority_{species}.log")
     resources:
-        cpus_per_task  = 4,
-        mem_mb_per_cpu = 10000,
+        cpus_per_task  = 10,
+        mem_mb_per_cpu = 8000,
         runtime        = 200
     envmodules:
         "CD-HIT/4.8.1-GCC-13.3.0",

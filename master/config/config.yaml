@@ -1,5 +1,5 @@
 GENOMES_DIR: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/Genomes"
-GENOMES_DIR_DONE: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/CompletedRuns"
+GENOMES_DIR_DONE: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/ALLDONE"
 GENOMES_SOURCE_DIR: "/data/brussel/vo/000/bvo00034/vsc10945/Genomes"
 LOG_DIR: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS"
 PFAM_DIR: "/user/brussel/109/vsc10945/home/scratch/TE/ManualCuration/Databases"
@@ -20,5 +20,5 @@ RE_SEED: 10                                       # shared seqtk seed for both m
 # --- Priority Table for Curation ---
 
 REPBASE_DB: "/user/brussel/109/vsc10945/home/scratch/TE/Libraries/repbase/RepBase31.07.fasta/repbase"
-CDD_DIR: ""      # CDD base dir for the priority-table domain search; must hold Cdd* db, rpsbproc/rpsbproc and rpsbproc/data. Set before running
+CDD_DIR: "/user/brussel/109/vsc10945/home/scratch/Software/CDD"      # CDD base dir for the priority-table domain search; must hold Cdd* db, rpsbproc/rpsbproc and rpsbproc/data. Set before running
 SAT_LIB: ""   # satellite consensus library FASTA for the priority-table satellite screen; set before running
