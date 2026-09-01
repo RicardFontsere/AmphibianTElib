@@ -95,7 +95,7 @@ echo ">>> [P4] DONE - `awk '$1!="NA"' col_wcl.txt | wc -l` families found in $di
 
 
 # ---------------------------------------------------------------------------
-# P4b  copy numbers from the RepeatMasker .out  ->  col_flc.txt, col_allc.txt
+# P4  copy numbers from the RepeatMasker .out  ->  col_flc.txt, col_allc.txt
 # ---------------------------------------------------------------------------
 # .out fields:  1 SW  2 %div  3 %del  4 %ins  5 query  6 qbeg  7 qend  8 (qleft)
 #               9 strand  10 repeat  11 class/family  12 rbeg|(rleft)  13 rend
@@ -123,6 +123,7 @@ FULLLEN_MINCOV=0.8
 # LINEs are routinely 5'-truncated by the insertion mechanism itself, not by decay,
 # so a strict floor would discard bona fide copies of L1-like families.
 # Set to 0 to count every insertion.
+
 COUNT_MINCOV=0.25
 
 awk -v mincov="$FULLLEN_MINCOV" -v mincount="$COUNT_MINCOV" '
@@ -230,7 +231,7 @@ echo ">>> [P6] DONE - CDD domain search finished"
 
 
 # ---------------------------------------------------------------------------
-# P6b  tandem-repeat screen with TRF  ->  col_trf*.txt + sat_monomers.nr.fa
+# P7  tandem-repeat screen with TRF  ->  col_trf*.txt + sat_monomers.nr.fa
 # ---------------------------------------------------------------------------
 # maxperiod=2000 is the critical parameter: TRF's default of 500 silently misses
 # the kb-scale monomers that are common in amphibians.
@@ -319,7 +320,7 @@ echo ">>> [P6b] DONE - `grep -c SAT_CANDIDATE col_trfcall.txt || true` families 
 
 
 # ---------------------------------------------------------------------------
-# P7  merge
+# P8  merge
 # ---------------------------------------------------------------------------
 
 # paste silently produces a ragged table if any column file is short, so check first.

@@ -1,0 +1,26 @@
+GENOMES_DIR: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/ALLDONE"
+GENOMES_DIR_DONE: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/ALLDONE"
+GENOMES_SOURCE_DIR: "/data/brussel/vo/000/bvo00034/vsc10945/Genomes"
+LOG_DIR: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS"
+PFAM_DIR: "/user/brussel/109/vsc10945/home/scratch/TE/ManualCuration/Databases"
+REPBASE_DB: ""   # pre-built RepBase blast nucl db (db prefix) for the priority-table rule; set before running
+PFAMSCAN_DIR: "/user/brussel/109/vsc10945/home/scratch/Software/PfamScan"   # holds pfam_scan.pl (added to PERL5LIB)
+
+# --- RepeatExplorer2 short-read branch ---
+READS_DIR: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/Reads"                          
+REPEATEXPLORER_SIF: "/user/brussel/109/vsc10945/home/scratch/Software/repeatexplorer2/repeatexplorer.sif"
+SEQTK: "/rhea/scratch/brussel/vo/000/bvo00034/vsc10945/Software/bin/seqtk"
+RE_TAXON: "METAZOA3.0"
+RE_COVERAGE: 0.25                                 # round-1 target coverage (authors: 0.1-0.5x)
+RE_COVERAGE_R2: 0.5                               # round-2 coverage after depletion (satMiner "doubles")
+RE_MINCL: 0.01                                    # seqclust -m: min cluster size (% of reads)
+RE_READLEN: 101                                   # fixed uniform read length (all species)
+RE_SEED: 10                                       # shared seqtk seed for both mates
+
+# --- RepeatMasker + Priority Table for Curation ---
+
+DFAM_TETOOLS_SIF: "/apps/brussel/singularity/dfam-tetools/dfam-tetools-1.88.5.sif"   # provides calcDivergenceFromAlign.pl for the divergence summary
+
+REPBASE_DB: "/user/brussel/109/vsc10945/home/scratch/TE/Libraries/repbase/RepBase31.07.fasta/repbase"
+CDD_DIR: "/user/brussel/109/vsc10945/home/scratch/Software/CDD"      # CDD base dir for the priority-table domain search; must hold Cdd* db, rpsbproc/rpsbproc and rpsbproc/data. Set before running
+SAT_LIB: ""   # satellite consensus library FASTA for the priority-table satellite screen; set before running

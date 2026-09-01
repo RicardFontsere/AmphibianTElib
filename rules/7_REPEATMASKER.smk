@@ -1,5 +1,5 @@
 # ===========================================================================
-# RepeatMasker branch (feeds the priority table)
+# RepeatMasker
 #
 #   REPEATMASKER    -> mask the genome with the TEtrimmer library
 #   RMSK_DIVERGENCE -> Kimura divergence summary + repeat landscape
@@ -10,16 +10,6 @@
 
 
 rule REPEATMASKER:
-    """Mask the genome with the TEtrimmer library.
-
-    Only the three files consumed downstream are requested: .align (-a) for
-    calcDivergenceFromAlign, .out for the copy-number step of the priority
-    table and .tbl for the genome size. Optional outputs that nothing reads
-    later (-gff, -xm, -html, -u, -ace, -poly) are deliberately not asked for,
-    and -gccalc is dropped so the GC matrix is picked once for the whole
-    genome instead of per batch. -s is kept: sensitivity is the point.
-    .masked is written by RepeatMasker whatever we do, so -xsmall (free) at
-    least makes it a soft-masked genome rather than a run of Ns."""
     input:
         genome  = os.path.join(GENOMES_DIR_DONE, "{species}", "{species}_headers.fna"),
         library = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "TEtrimmer_consensus_merged.fasta"),
@@ -32,9 +22,9 @@ rule REPEATMASKER:
     log:
         os.path.join(LOG_DIR, "RepeatMasker", "repeatmasker_{species}.log")
     resources:
-        cpus_per_task  = 32,          # multiple of 4: rmblast uses 4 cores per -pa job
+        cpus_per_task  = 16,          
         mem_mb_per_cpu = 4000,
-        runtime        = 7200,        # 5 days: fewer cores than before, so longer walls
+        runtime        = 1200,        
     envmodules:
         "RepeatMasker/4.2.3-foss-2025a",
     shell:
@@ -46,9 +36,8 @@ rule REPEATMASKER:
 
         # -pa = cores / 4 (one rmblast job takes 4 cores)
         RepeatMasker \
-          -pa $(( {resources.cpus_per_task} / 4 )) \
+          -pa 4 \
           -a \
-          -s \
           -no_is \
           -xsmall \
           -lib {input.library} \
@@ -61,9 +50,7 @@ rule REPEATMASKER:
 
 rule RMSK_DIVERGENCE:
     """Kimura divergence summary (.divsum) + repeat landscape HTML from the
-    RepeatMasker .align. The divsum feeds the priority table; the HTML is the
-    human-readable landscape. calcDivergenceFromAlign is run without -a: the
-    align_with_div copy is huge and nothing downstream reads it."""
+    RepeatMasker .align. """
     input:
         align = os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}_headers.fna.align"),
         tbl   = os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}_headers.fna.tbl"),

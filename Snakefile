@@ -79,7 +79,7 @@ include: "rules/8_PRIORITY_TABLE.smk"
 
 rule all:
     input:
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "{species}_headers.fna"),                                 species=SPECIES),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "{species}_headers.fna"),                            species=SPECIES),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}.builddb.done"),                   species=SPECIES),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}.repeatmodeler.done"),             species=SPECIES),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0.fasta"),                    species=SPECIES),
