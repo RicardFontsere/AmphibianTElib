@@ -32,6 +32,7 @@ rule REPEATMASKER:
         exec &> {log}
         set -euo pipefail
         mkdir -p {params.rmsk_dir}
+        cd {params.rmsk_dir}   # RepeatMasker writes its RM_* batch/temp dirs into the cwd
         echo "[{wildcards.species}] REPEATMASKER $(date +%F_%T)"
 
         # -pa = cores / 4 (one rmblast job takes 4 cores)
