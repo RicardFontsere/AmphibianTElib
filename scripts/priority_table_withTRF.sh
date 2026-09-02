@@ -23,7 +23,7 @@ then
     echo -e "OUTPUT:\t\tfinal_priority.table.tab, with columns:"
     echo -e "\t\tfamily | length | copies_fl | copies_all | KimuraDiv |"
     echo -e "\t\trepbase_hit | repbase_pident | repbase_qcov | repbase_bitscore |"
-    echo -e "\t\tn_domains | domains | trf_call | trf_copies | trf_monomer | trf_monomer_len"
+    echo -e "\t\tn_domains | domains | trf_call | trf_copies | trf_monomer_len"
     echo -e "\t\tsat_monomers.nr.fa, dereplicated monomers of the flagged families\n"
     exit
 fi
@@ -317,12 +317,11 @@ awk -F'\t' -v minfrac="$TRF_MINFRAC" -v minper="$TRF_MINPER" '
 ' trf.keys.tsv trf.arrays.tsv | sort > trf.tab
 
 awk -F'\t' '
-  NR==FNR { cl[$1]=$2; c[$1]=$3; ml[$1]=$4; fr[$1]=$5; mo[$1]=$6; next }
+  NR==FNR { cl[$1]=$2; c[$1]=$3; ml[$1]=$4; fr[$1]=$5; next }
   { print ($0 in cl ? cl[$0] : "NA") > "col_trfcall.txt";
     print ($0 in cl ? c[$0]  : "NA") > "col_trfcop.txt";
     print ($0 in cl ? ml[$0] : "NA") > "col_trfmonlen.txt";
     print ($0 in cl ? fr[$0] : "NA") > "col_trffrac.txt";
-    print ($0 in cl ? mo[$0] : "NA") > "col_trfmono.txt";
   }
 ' trf.tab col1.txt
 
@@ -342,7 +341,7 @@ echo ">>> [P6b] DONE - `grep -c SAT_CANDIDATE col_trfcall.txt || true` families 
 
 # paste silently produces a ragged table if any column file is short, so check first.
 ncol=`wc -l < col1.txt`
-for f in col2.txt col_flc.txt col_allc.txt col_kim.txt col5.txt col4.txt col6.txt col_trfcall.txt col_trfcop.txt col_trfmono.txt col_trfmonlen.txt; do
+for f in col2.txt col_flc.txt col_allc.txt col_kim.txt col5.txt col4.txt col6.txt col_trfcall.txt col_trfcop.txt col_trfmonlen.txt; do
     n=`wc -l < $f`
     if [ "$n" -ne "$ncol" ]; then
         echo "ERROR: $f has $n lines, expected $ncol (same as col1.txt) - aborting merge" >&2
@@ -350,8 +349,8 @@ for f in col2.txt col_flc.txt col_allc.txt col_kim.txt col5.txt col4.txt col6.tx
     fi
 done
 
-echo -e "family\tlength\tcopies_fl\tcopies_all\tKimuraDiv\trepbase_hit\trepbase_pident\trepbase_qcov\trepbase_bitscore\tn_domains\tdomains\ttrf_call\ttrf_copies\ttrf_monomer\ttrf_monomer_len" > final_priority.table.tab
-paste -d "\t" col1.txt col2.txt col_flc.txt col_allc.txt col_kim.txt col5.txt col4.txt col6.txt col_trfcall.txt col_trfcop.txt col_trfmono.txt col_trfmonlen.txt >> final_priority.table.tab
+echo -e "family\tlength\tcopies_fl\tcopies_all\tKimuraDiv\trepbase_hit\trepbase_pident\trepbase_qcov\trepbase_bitscore\tn_domains\tdomains\ttrf_call\ttrf_copies\ttrf_monomer_len" > final_priority.table.tab
+paste -d "\t" col1.txt col2.txt col_flc.txt col_allc.txt col_kim.txt col5.txt col4.txt col6.txt col_trfcall.txt col_trfcop.txt col_trfmonlen.txt >> final_priority.table.tab
 
 echo ">>> [P7] DONE - final_priority.table.tab generated"
 echo
