@@ -84,6 +84,6 @@ rule all:
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}.repeatmodeler.done"),             species=SPECIES),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0.fasta"),                    species=SPECIES),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done"),            species=SPECIES),
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}.divsum.html"),                    species=SPECIES_WITH_TETRIMMER),
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "Priority", "final_priority.table.tab"),             species=SPECIES_WITH_TETRIMMER)
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}.divsum.html"),                    species=SPECIES),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "Priority", "final_priority.table.tab"),             species=SPECIES)
 #        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "{species}.repeatexplorer.done"),  species=SPECIES_WITH_READS)

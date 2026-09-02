@@ -16,12 +16,13 @@ rule PRIORITY_TABLE:
     screen, merged into final_priority.table.tab. Runs in place in Priority/,
     at the same depth as RMDB/ and RMSK/."""
     input:
-        library = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "TEtrimmer_consensus_merged.fasta"),
         divsum  = os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}.align.divsum"),
         rmout   = os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}_headers.fna.out"),
+        done    = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done"),
     output:
         table = os.path.join(GENOMES_DIR_DONE, "{species}", "Priority", "final_priority.table.tab"),
     params:
+        library = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "TEtrimmer_consensus_merged.fasta"),
         workdir = os.path.join(GENOMES_DIR_DONE, "{species}", "Priority"),
         cdddir  = config["CDD_DIR"],
         repbase = config["REPBASE_DB"],
@@ -42,7 +43,7 @@ rule PRIORITY_TABLE:
         mkdir -p {params.workdir} $(dirname {log})
         cd {params.workdir}
         bash {params.script} \
-            {input.library} \
+            {params.library} \
             {input.divsum} \
             {input.rmout} \
             {params.cdddir} \
