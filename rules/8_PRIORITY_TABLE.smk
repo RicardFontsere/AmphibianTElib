@@ -11,18 +11,18 @@ rule priority_all:
 rule PRIORITY_TABLE:
     """Post-process the TEtrimmer library into a per-family priority table:
     cd-hit-est dereplication, consensus length, genome occupancy and Kimura age
-    from the RepeatMasker .divsum, defragmented/full-length copy counts from the
-    RepeatMasker .out, RepBase novelty screen, CDD domains and a TRF satellite
+    from the RepeatMasker .divsum, BLAST copy counts from the TEtrimmer
+    summary.txt, RepBase novelty screen, CDD domains and a TRF satellite
     screen, merged into final_priority.table.tab. Runs in place in Priority/,
     at the same depth as RMDB/ and RMSK/."""
     input:
         divsum  = os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}.align.divsum"),
-        rmout   = os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}_headers.fna.out"),
         done    = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done"),
     output:
         table = os.path.join(GENOMES_DIR_DONE, "{species}", "Priority", "final_priority.table.tab"),
     params:
         library = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "TEtrimmer_consensus_merged.fasta"),
+        summary = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "summary.txt"),
         workdir = os.path.join(GENOMES_DIR_DONE, "{species}", "Priority"),
         cdddir  = config["CDD_DIR"],
         repbase = config["REPBASE_DB"],
@@ -45,7 +45,7 @@ rule PRIORITY_TABLE:
         bash {params.script} \
             {params.library} \
             {input.divsum} \
-            {input.rmout} \
+            {params.summary} \
             {params.cdddir} \
             {params.repbase} \
             {resources.cpus_per_task} \

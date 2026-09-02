@@ -4,11 +4,11 @@ set -e
 
 if [ $# -ne 6 ]
 then
-    echo -e "\nusage: `basename $0` <TEtrimmer_lib.fa> <align.divsum> <rm.out> <cdd_dir> <repbase_blastdb> <threads>\n"
+    echo -e "\nusage: `basename $0` <TEtrimmer_lib.fa> <align.divsum> <tetrimmer_summary.txt> <cdd_dir> <repbase_blastdb> <threads>\n"
     echo -e "DESCRIPTION:\tRuns a pipeline that: 1) reduces sequence redundancy from the TEtrimmer library"
     echo -e "\t\tusing cd-hit-est; 2) extracts family names; 3) calculates consensus length; 4) pulls"
-    echo -e "\t\twellCharLen and Kimura divergence from a RepeatMasker align.divsum; 4b) counts"
-    echo -e "\t\tdefragmented and full-length copies from the RepeatMasker .out; 5) screens each"
+    echo -e "\t\twellCharLen and Kimura divergence from a RepeatMasker align.divsum; 4b) pulls"
+    echo -e "\t\tBLAST copy counts from the TEtrimmer summary.txt; 5) screens each"
     echo -e "\t\tfamily against RepBase for novelty; 6) searches conserved domains against CDD;"
     echo -e "\t\t6b) screens each consensus with TRF and flags families whose length is >=80%"
     echo -e "\t\tcovered by a tandem array as satellite candidates; 7) merges into"
@@ -16,12 +16,12 @@ then
     echo -e "REQUIRES:\tcd-hit, trf, blast (incl. rpstblastn) and rpsbproc + a CDD rpsblast database.\n"
     echo -e "INPUT:\t\t<TEtrimmer_lib.fa>\tTEtrimmer consensus library (e.g. TEtrimmer_consensus_merged.fasta)"
     echo -e "\t\t<align.divsum>\t\tRepeatMasker .divsum file (Kimura table, class/repeat/absLen/wellCharLen/Kimura%)"
-    echo -e "\t\t<rm.out>\t\tRepeatMasker .out file from the SAME run as the .divsum"
+    echo -e "\t\t<tetrimmer_summary.txt>\tTEtrimmer summary.txt (CSV) from the run that built the library"
     echo -e "\t\t<cdd_dir>\t\tCDD base dir: holds the rpsbproc binary and utils/db/Cdd + utils/data"
     echo -e "\t\t<repbase_blastdb>\tpath to a PRE-BUILT RepBase blast nucl database (db prefix, already makeblastdb'd)"
     echo -e "\t\t<threads>\t\tnumber of CPU threads"
     echo -e "OUTPUT:\t\tfinal_priority.table.tab, with columns:"
-    echo -e "\t\tfamily | length | copies_fl | copies_all | KimuraDiv |"
+    echo -e "\t\tfamily | length | input_full_blast_n | output_blast_n | output_full_blast_n | KimuraDiv |"
     echo -e "\t\trepbase_hit | repbase_pident | repbase_qcov | repbase_bitscore |"
     echo -e "\t\tn_domains | domains | trf_call | trf_copies | trf_monomer_len"
     echo -e "\t\tsat_monomers.nr.fa, dereplicated monomers of the flagged families\n"
@@ -30,7 +30,7 @@ fi
 
 lib=$1
 divsum=$2
-rmout=$3
+summary=$3
 cdddir=$4
 repbase=$5
 threads=$6
@@ -95,69 +95,61 @@ echo ">>> [P4] DONE - `awk '$1!="NA"' col_wcl.txt | wc -l` families found in $di
 
 
 # ---------------------------------------------------------------------------
-# P4  copy numbers from the RepeatMasker .out  ->  col_flc.txt, col_allc.txt
+# P4b  BLAST copy counts from the TEtrimmer summary  ->  col_ifbn/col_obn/col_ofbn
 # ---------------------------------------------------------------------------
-# .out fields:  1 SW  2 %div  3 %del  4 %ins  5 query  6 qbeg  7 qend  8 (qleft)
-#               9 strand  10 repeat  11 class/family  12 rbeg|(rleft)  13 rend
-#              14 (rleft)|rbeg  15 ID  [16 * = overlapping lower-scoring hit]
+# TEtrimmer already BLASTs every consensus back against the genome and records how
+# many hits it recovered and how many of those were full length, for the input
+# (RepeatModeler) consensus and for its own curated output. That answers the same
+# question the RepeatMasker .out was being parsed for, measured by the tool that
+# actually built the library, so the .out parsing is gone entirely -- along with its
+# fragment defragmentation, its reconstructed consensus length, and the
+# FULLLEN_MINCOV / COUNT_MINCOV thresholds those needed.
 #
-# Fields 12/14 swap meaning with strand: on 'C' the parenthesised (left) moves to 12
-# and the begin to 14. Field 13 is always the end. Consensus length is reconstructed
-# as end + left, since RepeatMasker never prints it directly.
+# summary.txt is CSV with a header row. Fields used:
+#   2 output_name  4 input_full_blast_n  5 output_blast_n  6 output_full_blast_n
 #
-# Fragments of one insertion share query+ID (fields 5+15), so coverage is summed per
-# insertion before the length test -- an element broken into 40/30/30% pieces counts
-# as one full-length copy, not zero. copies_all counts every insertion regardless of
-# length; the fl/all ratio is the intactness signal (few fl + many all = dead lineage).
+# Keyed on output_name -- the name TEtrimmer wrote into the library -- matched against
+# the part of the library name BEFORE '#', the same keying P4/P6 use. One output_name
+# can appear on several rows when TEtrimmer collapses inputs, and the output_* counts
+# are properties of the output that repeat identically across those rows, so max()
+# dereplicates them; summing would multiply-count a single consensus.
 #
-# No class filter is applied: the col1.txt keying below already discards anything not
-# in the library, so library families classified as Satellite/Unknown are not lost.
+# TEtrimmer writes literal NaN for values it did not compute; those become NA so the
+# column stays alignable with the rest of the table.
 
-FULLLEN_MINCOV=0.8
+if [ ! -f "$summary" ]; then
+    echo "ERROR: TEtrimmer summary not found: $summary" >&2
+    exit 1
+fi
 
-# Minimum fraction of the consensus an insertion must span to be COUNTED AT ALL.
-# Coverage is already summed across the fragments of one insertion, so this does not
-# discard genuinely broken copies -- it discards insertions that are short after
-# defragmentation: spurious 40-80 bp hits to a conserved motif, a shared TSD, or a
-# low-complexity stretch. Kept loose at 0.25 rather than the conventional 0.5 because
-# LINEs are routinely 5'-truncated by the insertion mechanism itself, not by decay,
-# so a strict floor would discard bona fide copies of L1-like families.
-# Set to 0 to count every insertion.
-
-COUNT_MINCOV=0.25
-
-awk -v mincov="$FULLLEN_MINCOV" -v mincount="$COUNT_MINCOV" '
-  $1 ~ /^[0-9]+$/ && $16 != "*" {
-    end = $13
-    if ($9 == "C") { beg = $14; left = $12 } else { beg = $12; left = $14 }
-    gsub(/[()]/, "", left); gsub(/[()]/, "", beg)
-    id = $5 SUBSEP $15
-    cov[id] += end - beg + 1
-    nm[id]   = $10
-    L = end + left
-    if (L > cl[id]) cl[id] = L
+awk -F',' '
+  NR==1 { next }
+  { sub(/\r$/, "") }
+  $2 == "" || $2 == "NaN" { next }
+  {
+    k = $2; seen[k] = 1
+    if ($4 != "NaN" && $4 != "" && (!(k in a) || $4+0 > a[k])) a[k] = $4+0
+    if ($5 != "NaN" && $5 != "" && (!(k in b) || $5+0 > b[k])) b[k] = $5+0
+    if ($6 != "NaN" && $6 != "" && (!(k in c) || $6+0 > c[k])) c[k] = $6+0
   }
   END {
-    for (i in cov) {
-      if (cl[i] <= 0) continue
-      f = cov[i]/cl[i]
-      if (f < mincount) continue
-      all[nm[i]]++
-      if (f >= mincov) fl[nm[i]]++
-    }
-    for (r in all) printf "%s\t%d\t%d\n", r, (r in fl ? fl[r] : 0), all[r]
+    for (k in seen)
+      printf "%s\t%s\t%s\t%s\n", k, (k in a ? a[k] : "NA"), \
+                                        (k in b ? b[k] : "NA"), \
+                                        (k in c ? c[k] : "NA")
   }
-' "$rmout" | sort > copies.tab
+' "$summary" | sort > tetrimmer.tab
 
 awk -F'\t' '
-  NR==FNR { fl[$1]=$2; all[$1]=$3; next }
+  NR==FNR { ifb[$1]=$2; obn[$1]=$3; ofbn[$1]=$4; next }
   { k=$0; sub(/#.*/,"",k);
-    print (k in fl  ? fl[k]  : 0) > "col_flc.txt";
-    print (k in all ? all[k] : 0) > "col_allc.txt";
+    print (k in ifb ? ifb[k]  : "NA") > "col_ifbn.txt";
+    print (k in ifb ? obn[k]  : "NA") > "col_obn.txt";
+    print (k in ifb ? ofbn[k] : "NA") > "col_ofbn.txt";
   }
-' copies.tab col1.txt
+' tetrimmer.tab col1.txt
 
-echo ">>> [P4b] DONE - `awk '$1>0' col_allc.txt | wc -l` families with >= ${COUNT_MINCOV} copies in $rmout, `awk '$1>0' col_flc.txt | wc -l` with >= ${FULLLEN_MINCOV} full-length copies"
+echo ">>> [P4b] DONE - `awk '$1!="NA"' col_obn.txt | wc -l` of `wc -l < col1.txt` families found in $summary"
 
 
 # ---------------------------------------------------------------------------
@@ -341,7 +333,7 @@ echo ">>> [P6b] DONE - `grep -c SAT_CANDIDATE col_trfcall.txt || true` families 
 
 # paste silently produces a ragged table if any column file is short, so check first.
 ncol=`wc -l < col1.txt`
-for f in col2.txt col_flc.txt col_allc.txt col_kim.txt col5.txt col4.txt col6.txt col_trfcall.txt col_trfcop.txt col_trfmonlen.txt; do
+for f in col2.txt col_ifbn.txt col_obn.txt col_ofbn.txt col_kim.txt col5.txt col4.txt col6.txt col_trfcall.txt col_trfcop.txt col_trfmonlen.txt; do
     n=`wc -l < $f`
     if [ "$n" -ne "$ncol" ]; then
         echo "ERROR: $f has $n lines, expected $ncol (same as col1.txt) - aborting merge" >&2
@@ -349,19 +341,19 @@ for f in col2.txt col_flc.txt col_allc.txt col_kim.txt col5.txt col4.txt col6.tx
     fi
 done
 
-echo -e "family\tlength\tcopies_fl\tcopies_all\tKimuraDiv\trepbase_hit\trepbase_pident\trepbase_qcov\trepbase_bitscore\tn_domains\tdomains\ttrf_call\ttrf_copies\ttrf_monomer_len" > final_priority.table.tab
-paste -d "\t" col1.txt col2.txt col_flc.txt col_allc.txt col_kim.txt col5.txt col4.txt col6.txt col_trfcall.txt col_trfcop.txt col_trfmonlen.txt >> final_priority.table.tab
+echo -e "family\tlength\tinput_full_blast_n\toutput_blast_n\toutput_full_blast_n\tKimuraDiv\trepbase_hit\trepbase_pident\trepbase_qcov\trepbase_bitscore\tn_domains\tdomains\ttrf_call\ttrf_copies\ttrf_monomer_len" > final_priority.table.tab
+paste -d "\t" col1.txt col2.txt col_ifbn.txt col_obn.txt col_ofbn.txt col_kim.txt col5.txt col4.txt col6.txt col_trfcall.txt col_trfcop.txt col_trfmonlen.txt >> final_priority.table.tab
 
 echo ">>> [P7] DONE - final_priority.table.tab generated"
 echo
-echo "To list candidate families with no close RepBase match, ranked by full-length copies:"
-echo "  awk -F'\t' 'NR>1 && (\$6==0 || \$8<50)' final_priority.table.tab | sort -k3,3nr | less -S"
+echo "To list candidate families with no close RepBase match, ranked by full-length BLAST hits:"
+echo "  awk -F'\t' 'NR>1 && (\$7==0 || \$9<50)' final_priority.table.tab | sort -k5,5nr | less -S"
 echo
 echo "To list intact, young novel families (the best curation targets):"
-echo "  awk -F'\t' 'NR>1 && (\$6==0 || \$8<50) && \$3>=5 && \$5!=\"NA\" && \$5<20' final_priority.table.tab | sort -k4,4nr | less -S"
+echo "  awk -F'\t' 'NR>1 && (\$7==0 || \$9<50) && \$5>=5 && \$6!=\"NA\" && \$6<20' final_priority.table.tab | sort -k4,4nr | less -S"
 echo
 echo "To list satellite candidates for manual inspection, ranked by copy number:"
-echo "  awk -F'\t' 'NR>1 && \$12==\"SAT_CANDIDATE\"' final_priority.table.tab | sort -k4,4nr | less -S"
+echo "  awk -F'\t' 'NR>1 && \$13==\"SAT_CANDIDATE\"' final_priority.table.tab | sort -k4,4nr | less -S"
 echo
 echo "Covered fraction is not in the table; near-misses are in trf.tab (field 5):"
 echo "  awk -F'\t' '\$2==\"NA\" && \$5>=0.5' trf.tab | sort -k5,5gr | less -S"
