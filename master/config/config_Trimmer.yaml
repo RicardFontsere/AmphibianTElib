@@ -1,5 +1,5 @@
 GENOMES_DIR: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/ALLDONE"
-GENOMES_DIR_DONE: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/ALLDONE"
+GENOMES_DIR_DONE: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/CompletedRuns"
 GENOMES_SOURCE_DIR: "/data/brussel/vo/000/bvo00034/vsc10945/Genomes"
 LOG_DIR: "/user/brussel/109/vsc10945/home/scratch/AmphibianTELibrary/LOGS"
 PFAM_DIR: "/user/brussel/109/vsc10945/home/scratch/TE/ManualCuration/Databases"

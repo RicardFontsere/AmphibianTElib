@@ -14,7 +14,7 @@ rule TETRIMMER:
     resources:
         cpus_per_task  = 20,
         mem_mb_per_cpu = 3000,
-        runtime        = 900
+        runtime        = 4000
     envmodules:
         "TEtrimmer/1.7.2-foss-2025a",
     shell:

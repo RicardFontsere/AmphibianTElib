@@ -12,19 +12,20 @@
 rule REPEATMASKER:
     input:
         genome  = os.path.join(GENOMES_DIR_DONE, "{species}", "{species}_headers.fna"),
-        library = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "TEtrimmer_consensus_merged.fasta"),
+        done = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done")
     output:
         align = os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}_headers.fna.align"),
         out   = os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}_headers.fna.out"),
         tbl   = os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}_headers.fna.tbl"),
     params:
         rmsk_dir = os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK"),
+        library = os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "TEtrimmer_consensus_merged.fasta"),
     log:
         os.path.join(LOG_DIR, "RepeatMasker", "repeatmasker_{species}.log")
     resources:
-        cpus_per_task  = 16,          
-        mem_mb_per_cpu = 4000,
-        runtime        = 1200,        
+        cpus_per_task  = 32,          
+        mem_mb_per_cpu = 2400,
+        runtime        = 2200,        
     envmodules:
         "RepeatMasker/4.2.3-foss-2025a",
     shell:
@@ -32,15 +33,16 @@ rule REPEATMASKER:
         exec &> {log}
         set -euo pipefail
         mkdir -p {params.rmsk_dir}
+        cd {params.rmsk_dir}
         echo "[{wildcards.species}] REPEATMASKER $(date +%F_%T)"
 
         # -pa = cores / 4 (one rmblast job takes 4 cores)
         RepeatMasker \
-          -pa 4 \
+          -pa 8 \
           -a \
           -no_is \
           -xsmall \
-          -lib {input.library} \
+          -lib {params.library} \
           -dir {params.rmsk_dir} \
           {input.genome}
 
