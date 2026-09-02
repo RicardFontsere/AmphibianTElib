@@ -61,8 +61,15 @@ for _s in SPECIES:
     SPECIES_WITH_READS.append(_s)
 
 
-# Species eligible for PRIORITY_TABLE: those whose TEtrimmer consensus library
-# already exists on disk (skip the ones still lacking it).
+# Species whose TEtrimmer consensus library already exists on disk.
+# ONLY used by the `priority_all` convenience target, which is meant to pick up
+# finished TEtrimmer runs without pulling TEtrimmer back into the DAG.
+# Do NOT gate `rule all` on this: it is evaluated at parse time, so before the
+# first TEtrimmer run it is empty and every downstream target silently
+# disappears (that is what made `--until PRIORITY_TABLE` report 0 jobs).
+# `rule all` uses SPECIES and lets the rule graph -- TETRIMMER -> REPEATMASKER
+# -> RMSK_DIVERGENCE -> PRIORITY_TABLE, chained through the
+# {species}.tetrimmer.done sentinel -- decide what still has to run.
 SPECIES_WITH_TETRIMMER = [
     _s for _s in SPECIES
     if os.path.exists(os.path.join(GENOMES_DIR_DONE, _s, "TEtrimmer", "TEtrimmer_consensus_merged.fasta"))
@@ -84,6 +91,6 @@ rule all:
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}.repeatmodeler.done"),             species=SPECIES),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMDB", "{species}_rm1.0.fasta"),                    species=SPECIES),
         expand(os.path.join(GENOMES_DIR_DONE, "{species}", "TEtrimmer", "{species}.tetrimmer.done"),            species=SPECIES),
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}.divsum.html"),                    species=SPECIES_WITH_TETRIMMER),
-        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "Priority", "final_priority.table.tab"),             species=SPECIES_WITH_TETRIMMER)
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RMSK", "{species}.divsum.html"),                    species=SPECIES),
+        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "Priority", "final_priority.table.tab"),             species=SPECIES)
 #        expand(os.path.join(GENOMES_DIR_DONE, "{species}", "RepeatExplorer", "{species}.repeatexplorer.done"),  species=SPECIES_WITH_READS)
