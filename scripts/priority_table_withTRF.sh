@@ -247,10 +247,16 @@ echo ">>> [P6] DONE - CDD domain search finished"
 # the same bases two or three times. The union counts every base once and can never
 # exceed the consensus length, so trf_frac stays a real fraction.
 #
-# Single pass, relying on TRF emitting arrays in ascending start order per sequence:
-#   start > e            -> disjoint from what is covered, add the whole interval
-#   start <= e < end     -> overlaps, add only the new tail (end - e)
-#   end <= e             -> already inside the covered region, add nothing
+# TRF does NOT emit arrays in ascending start order. It reports by increasing period,
+# so the enclosing HOR description routinely arrives AFTER the narrower sub-arrays it
+# contains -- on scaCou3_397_rnd3#rRNA the 9214-10822 array at period 67 is emitted
+# last, after three 24-mers that sit inside it. A single pass that only tracks the
+# running end then credits that HOR with its 41 bp tail instead of its 1609 bp span,
+# giving a union of 1186 bp where the true answer is 2307. The error falls hardest on
+# higher-order satellite structure, i.e. exactly what this screen is looking for, so
+# the intervals are flattened and sorted before being merged:
+#   start > e + 1        -> disjoint, bank the open run and start a new one
+#   start <= e + 1       -> contiguous or overlapping, extend the run to max(e, end)
 #
 # TRF_MINPER=10 drops poly-A tails and microsatellites from the union; without it a
 # real TE with a long homopolymer tail can be pushed over the threshold. Satellite
@@ -275,17 +281,28 @@ fi
 
 paste col1.txt col2.txt > trf.keys.tsv
 
-awk -v minfrac="$TRF_MINFRAC" -v minper="$TRF_MINPER" '
+# Flatten the -ngs stream to  family / start / end / period / copies / consSize / monomer
+# and sort by family then start, so the merge below really does see ascending starts.
+awk -v OFS='\t' '
+  /^@/   { id = substr($1,2); next }
+  NF>=14 { print id, $1, $2, $3, $4, $5, $14 }
+' trf.dat | sort -t$'\t' -k1,1 -k2,2n > trf.arrays.tsv
+
+awk -F'\t' -v minfrac="$TRF_MINFRAC" -v minper="$TRF_MINPER" '
   NR==FNR { L[$1]=$2; next }
-  /^@/    { id=substr($1,2); next }
-  NF>=14 && $3+0 >= minper {
-    if      ($1 >  e[id]) { cov[id] += $2-$1+1; e[id]=$2 }
-    else if ($2 >  e[id]) { cov[id] += $2-e[id]; e[id]=$2 }
-    if ($4+0 > n[id] || ($4+0 == n[id] && $3+0 < p[id])) {
-      n[id]=$4; p[id]=$3; ml[id]=$5; mono[id]=$14
+  $4+0 < minper { next }
+  {
+    if      ($1 != cur) { if (cur != "") cov[cur] += e-s+1; cur=$1; s=$2; e=$3 }
+    else if ($2 > e+1)  { cov[cur] += e-s+1; s=$2; e=$3 }
+    else if ($3 > e)    { e=$3 }
+    # Dominant array: most copies, tie-broken to the SMALLER period so the monomer is
+    # reported and not its dimer. A max over all arrays, so the sort does not affect it.
+    if ($5+0 > n[$1] || ($5+0 == n[$1] && $4+0 < p[$1])) {
+      n[$1]=$5; p[$1]=$4; ml[$1]=$6; mono[$1]=$7
     }
   }
   END {
+    if (cur != "") cov[cur] += e-s+1          # bank the last open run
     # One line per family TRF found any array in. trf_frac is reported for all of
     # them so the near-misses stay visible; the copies / monomer_len / monomer
     # columns are filled only for families that clear the threshold.
@@ -297,7 +314,7 @@ awk -v minfrac="$TRF_MINFRAC" -v minper="$TRF_MINPER" '
         printf "%s\tNA\tNA\tNA\t%.2f\tNA\n", i, f
     }
   }
-' trf.keys.tsv trf.dat | sort > trf.tab
+' trf.keys.tsv trf.arrays.tsv | sort > trf.tab
 
 awk -F'\t' '
   NR==FNR { cl[$1]=$2; c[$1]=$3; ml[$1]=$4; fr[$1]=$5; mo[$1]=$6; next }
